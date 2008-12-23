@@ -4,6 +4,10 @@
 
   23 Dec 2008; Sebastian Pipping <sebastian@pipping.org>
   colormake-0.2.ebuild, Manifest :
+  Bring back double quotes for SRC_URI as well
+
+  23 Dec 2008; Sebastian Pipping <sebastian@pipping.org>
+  colormake-0.2.ebuild, Manifest :
   Bring back double quotes as requested
 
   23 Dec 2008; Sebastian Pipping <sebastian@pipping.org>
