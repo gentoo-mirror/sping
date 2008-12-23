@@ -3,15 +3,15 @@
 # $Header: $
 inherit eutils
 
-DESCRIPTION='Colorizing wrapper around make'
-HOMEPAGE=http://bre.klaki.net/programs/colormake/
+DESCRIPTION="Colorizing wrapper around make"
+HOMEPAGE="http://bre.klaki.net/programs/colormake/"
 SRC_URI=${HOMEPAGE}${P}.tar.gz
-LICENSE=GPL-2
+LICENSE="GPL-2"
 
-SLOT=0
-KEYWORDS=~x86
-IUSE=vanilla
-RDEPEND=dev-lang/perl
+SLOT="0"
+KEYWORDS="~x86"
+IUSE="vanilla"
+RDEPEND="dev-lang/perl"
 
 S=${WORKDIR}/${PN}
 
