@@ -11,7 +11,7 @@ SRC_URI="${HOMEPAGE}${P}.tar.gz"
 LICENSE="GPL-2"
 
 SLOT="0"
-KEYWORDS="alpha amd64 hppa mips ppc sparc x86"
+KEYWORDS="~alpha ~amd64 ~hppa ~mips ~ppc ~sparc ~x86"
 IUSE="vanilla"
 RESTRICT="mirror"
 DEPEND=""
@@ -24,10 +24,6 @@ src_unpack() {
 	cd "${S}"
 	use vanilla || epatch "${FILESDIR}/${P}-disable-broken-tagging.patch"
 	mv cmake colormake # prevent clash with dev-util/cmake
-}
-
-src_compile() {
-	:
 }
 
 src_install() {

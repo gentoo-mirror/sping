@@ -2,6 +2,10 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  23 Dec 2008; Sebastian Pipping <sebastian@pipping.org>
+  colormake-0.2.ebuild, Manifest :
+  Mask all keywords, remove empty src_compile
+
   22 Dec 2008; Sebastian Pipping <sebastian@pipping.org>
   colormake-0.2.ebuild, Manifest :
   Remove superfluous entries to RESTRICT, fix quoting, thanks to
@@ -11,3 +15,4 @@
   colormake-0.2.ebuild, colormake-0.2-disable-broken-tagging.patch,
   Manifest :
   Turn off mirror usage, patch out broken error tagging, cosmetics
+
