@@ -1,19 +1,15 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/git/git-1.6.0.4-r2.ebuild,v 1.1 2008/11/24 09:24:44 robbat2 Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/git/git-1.6.0.6.ebuild,v 1.8 2009/01/01 10:33:51 armin76 Exp $
 
 inherit toolchain-funcs eutils elisp-common perl-module bash-completion git
 
 MY_PV="${PV/_rc/.rc}"
 MY_P="${PN}-${MY_PV}"
 
-DOC_VER="1.6.1.rc4"
-
 DESCRIPTION="GIT - the stupid content tracker, the revision control system heavily used by the Linux kernel team"
 HOMEPAGE="http://git.or.cz/"
-SRC_URI="mirror://kernel/software/scm/git/${PN}-manpages-${DOC_VER}.tar.bz2
-		doc? ( mirror://kernel/software/scm/git/${PN}-htmldocs-${DOC_VER}.tar.bz2 )"
-RESTRICT="mirror"
+SRC_URI=""
 EGIT_BRANCH="master"
 EGIT_REPO_URI="git://git.kernel.org/pub/scm/git/git.git"
 # EGIT_REPO_URI="http://www.kernel.org/pub/scm/git/git.git"
@@ -34,7 +30,12 @@ DEPEND="
 		net-misc/curl
 		webdav? ( dev-libs/expat )
 	)
-	emacs?  ( virtual/emacs )"
+	emacs?  ( virtual/emacs )
+	doc?    (
+		app-text/asciidoc
+		app-text/xmlto
+		app-text/docbook2X
+	)"
 
 RDEPEND="${DEPEND}
 	perl? ( dev-perl/Error
@@ -95,22 +96,28 @@ src_unpack() {
 	git_src_unpack
 	cd "${S}"
 
-	# Replace version with current day
+	# Build git version string
 	cat >GIT-VERSION-GEN <<VERSION_GEN
 #!/bin/sh
-today=`date --rfc-3339=date`
-echo "GIT_VERSION = ${EGIT_BRANCH}@\${today}" > GIT-VERSION-FILE
+if git describe master ; then
+	# Git version from latest tag, e.g. "v1.6.1-48-ge9b8523"
+	version=`git describe master | sed 's/^v//'`
+else
+	# Git version as "9999.<year><month><day>.<commit[0..11]>"
+	version=9999.`date +%Y%m%d`.`git rev-list --abbrev-commit --abbrev=12 -1 HEAD`
+fi
+echo "GIT_VERSION = \${version}" > GIT-VERSION-FILE
 cat GIT-VERSION-FILE
 VERSION_GEN
 
-	unpack ${PN}-manpages-${DOC_VER}.tar.bz2
-	use doc && \
-		cd "${S}"/Documentation && \
-		unpack ${PN}-htmldocs-${DOC_VER}.tar.bz2
 	cd "${S}"
 
-#XXX	epatch "${FILESDIR}"/20080626-git-1.5.6.1-noperl.patch
-#XXX	epatch "${FILESDIR}"/20081123-git-1.6.0.4-noperl-cvsserver.patch
+	# Fix docbook2texi command
+	sed -i 's/DOCBOOK2X_TEXI=docbook2x-texi/DOCBOOK2X_TEXI=docbook2texi.pl/' \
+		Documentation/Makefile || die "sed failed"
+
+	epatch "${FILESDIR}"/20080626-git-1.5.6.1-noperl.patch || die "epatch failed"
+	epatch "${FILESDIR}"/20081123-git-1.6.0.4-noperl-cvsserver.patch || die "epatch failed"
 
 	sed -i \
 		-e 's:^\(CFLAGS =\).*$:\1 $(OPTCFLAGS) -Wall:' \
@@ -128,12 +135,18 @@ git_emake() {
 		OPTCFLAGS="${CFLAGS}" \
 		OPTLDFLAGS="${LDFLAGS}" \
 		prefix=/usr \
-		htmldir=/usr/share/doc/${PF}/html \
+		htmldir=/usr/share/doc/${PF} \
 		"$@"
 }
 
 src_compile() {
 	git_emake || die "emake failed"
+
+	if use doc ; then
+		( cd Documentation && git_emake man info html
+			exit $? ) \
+		|| die "emake man html info failed"
+	fi
 
 	if use emacs ; then
 		elisp-compile contrib/emacs/{,vc-}git.el || die "emacs modules failed"
@@ -145,19 +158,15 @@ src_compile() {
 }
 
 src_install() {
-	git_emake \
-		install || \
-		die "make install failed"
-
-	doman man?/*
+	git_emake install || die "make install failed"
 
 	dodoc README Documentation/{SubmittingPatches,CodingGuidelines}
-	use doc && dodir /usr/share/doc/${PF}/html
-	for d in / /howto/ /technical/ ; do
-		docinto ${d}
-		dodoc Documentation${d}*.txt
-		use doc && dohtml -p ${d} Documentation${d}*.html
-	done
+	if use doc ; then
+		( cd Documentation && git_emake install-man install-info install-html
+			exit $? ) \
+		|| die "make install-man install-html install-info failed"
+		ecompressdir /usr/share/doc/${PF} || die "ecompressdir failed"
+	fi
 	docinto /
 
 	dobashcompletion contrib/completion/git-completion.bash ${PN}
@@ -224,11 +233,11 @@ src_install() {
 
 	if use xinetd ; then
 		insinto /etc/xinetd.d
-		newins "${FILESDIR}"/git-daemon.xinetd git-daemon
+		newins "${FILESDIR}"/git-daemon.xinetd git-daemon || die "newins failed"
 	fi
 
-	newinitd "${FILESDIR}"/git-daemon.initd git-daemon
-	newconfd "${FILESDIR}"/git-daemon.confd git-daemon
+	newinitd "${FILESDIR}"/git-daemon.initd git-daemon || die "newinitd failed"
+	newconfd "${FILESDIR}"/git-daemon.confd git-daemon || die "newconfd failed"
 
 	fixlocalpod
 }
