@@ -51,6 +51,7 @@ qmmp_use_enable() {
 src_compile() {
 	cd "${S}"
 	epatch "${FILESDIR}"/$PN-0.2.3-fix-xspf.patch || die "epatch failed"
+	epatch "${FILESDIR}"/$PN-0.2.3-fix-playlist-download.patch || die "epatch failed"
 
 	# needs to be built in source tree
 	CMAKE_IN_SOURCE_BUILD=1
