@@ -31,15 +31,10 @@ src_unpack()
 {
 	unpack ${A}
 	cd "${S}"
-	rm -v lib/*.so.*
+	rm -f lib/*.so.*
 	rm -Rf src/SFML/Graphics/{GLEW,lib{jpeg,png},zlib}
 	epatch "${FILESDIR}"/${PN}-1.4-destdir-r5.patch || die "epatch failed"
 	epatch "${FILESDIR}"/${PN}-1.4-deps.patch || die "epatch failed"
-}
-
-src_compile()
-{
-	emake || die "emake failed"
 }
 
 src_install()
