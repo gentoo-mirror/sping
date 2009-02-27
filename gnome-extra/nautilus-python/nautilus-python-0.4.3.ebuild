@@ -2,11 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils autotools
+inherit eutils autotools versionator
+
+MY_PV=$(get_version_component_range 1-2)
 
 DESCRIPTION="Python bindings for Nautilus extensions"
 HOMEPAGE="http://svn.gnome.org/viewcvs/nautilus-python/"
-SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/0.4/${P}.tar.gz"
+SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/${MY_PV}/${P}.tar.gz"
 LICENSE="GPL-2"
 
 SLOT="0"
@@ -28,12 +30,6 @@ src_unpack() {
 	NOCONFIGURE="yes" sh autogen.sh
 }
 
-src_compile() {
-	econf || die "configure failed"
-	emake || die "make failed"
-}
-
 src_install() {
 	emake DESTDIR="${D}" install
 }
-
