@@ -4,7 +4,7 @@
 
 inherit eutils autotools
 
-DESCRIPTION="Stuffkeeper is a generic catalog program."
+DESCRIPTION="Generic catalog program"
 HOMEPAGE="http://stuffkeeper.org/"
 SRC_URI="http://download.sarine.nl/Programs/StuffKeeper/${P}.tar.gz"
 
