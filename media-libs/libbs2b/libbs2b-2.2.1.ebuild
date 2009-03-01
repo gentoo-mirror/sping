@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE=""
 
-PDEPEND="media-libs/libsndfile"
+RDEPEND="media-libs/libsndfile"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
