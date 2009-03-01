@@ -3,8 +3,9 @@
 # $Header: $
 
 DESCRIPTION="Easy installation of Gentoo overlays"
+
 HOMEPAGE="http://git.goodpoint.de/?p=layman-add.git;a=summary"
-SRC_URI="http://git.goodpoint.de/?p=layman-add.git;a=blob_plain;f=layman-add;hb=c3f0d2e170f8c15f837f749780f2b025611a854b;/layman-add"
+SRC_URI="http://www.hartwork.org/public/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -15,6 +16,5 @@ RDEPEND="app-portage/layman"
 DEPEND=${RDEPEND}
 
 src_install() {
-	cd "${DISTDIR}"
-	dobin layman-add
+	dobin layman-add || die "dobin failed"
 }
