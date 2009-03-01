@@ -1,6 +1,6 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/herrie/herrie-2.0.2.ebuild,v 1.5 2008/06/19 11:50:12 opfer Exp $
+# $Header: $
 
 inherit eutils toolchain-funcs
 
@@ -30,7 +30,7 @@ DEPEND="sys-libs/ncurses
 	pulseaudio? ( media-sound/pulseaudio )
 	sndfile? ( media-libs/libsndfile )
 	vorbis? ( media-libs/libvorbis )
-	xspf? ( >=media-libs/libspiff-0.6.5 )
+	xspf? ( <media-libs/libspiff-1.0.0 )
 	!ao? ( !alsa? ( !pulseaudio? ( !oss? ( media-libs/alsa-lib ) ) ) )
 	"
 RDEPEND="${DEPEND}"
