@@ -13,8 +13,9 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE=""
 
-DEPEND="media-libs/libsndfile"
-RDEPEND="${DEPEND}"
+PDEPEND="media-libs/libsndfile"
+DEPEND="${RDEPEND}
+	dev-util/pkgconfig"
 
 src_install()
 {
