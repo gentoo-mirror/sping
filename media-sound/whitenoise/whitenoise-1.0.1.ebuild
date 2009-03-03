@@ -6,8 +6,8 @@ inherit eutils
 
 DESCRIPTION="Small utility which turns your computer into an ambient random
 noise generator."
-HOMEPAGE="http://www.eecs.umich.edu/~pelzlpj/whitenoise/"
-SRC_URI="http://www.eecs.umich.edu/~pelzlpj/whitenoise/${P}.tar.gz"
+HOMEPAGE="http://pessimization.com/software/whitenoise/"
+SRC_URI="http://pessimization.com/software/whitenoise/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86"
