@@ -25,7 +25,8 @@ DEPEND=">=dev-lang/python-2.3
 src_unpack() {
 	unpack "${A}"
 	cd "${S}"
-	epatch ${FILESDIR}/${P}-py_lib_loc-fix.patch
+	epatch ${FILESDIR}/${PN}-0.4.3-py_lib_loc-fix.patch || die "epatch failed"
+	epatch ${FILESDIR}/${PN}-0.4.3-remove-getvfsfileinfo.patch || die "epatch failed"
 
 	NOCONFIGURE="yes" sh autogen.sh
 }
