@@ -2,17 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/x11-misc/pcmanfm/pcmanfm-0.5.ebuild,v 1.1 2008/08/31 18:05:08 yngwin Exp $
 
-EAPI="1"
 inherit eutils fdo-mime
 
 DESCRIPTION="Extremely fast and lightweight tabbed file manager"
+
 HOMEPAGE="http://pcmanfm.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="hal"
+IUSE="hal vanilla"
 
 RDEPEND="virtual/fam
 	x11-libs/cairo
@@ -24,6 +24,12 @@ RDEPEND="virtual/fam
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
 	sys-devel/gettext"
+
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+	use vanilla || epatch "${FILESDIR}"/${PN}-0.5-kill-sidebar-buttons.patch || die "epatch failed"
+}
 
 src_compile() {
 	econf $(use_enable hal) || die "econf failed"

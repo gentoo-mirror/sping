@@ -1,0 +1,81 @@
+diff --git a/src/ptk/ptk-file-browser.c b/src/ptk/ptk-file-browser.c
+index 4a8415d..4a4a8da 100644
+--- a/src/ptk/ptk-file-browser.c
++++ b/src/ptk/ptk-file-browser.c
+@@ -2737,13 +2737,11 @@ void ptk_file_browser_set_side_pane_mode( PtkFileBrowser* file_browser,
+         gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW( file_browser->side_view_scroll ),
+                                         GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC );
+         file_browser->side_view = ptk_file_browser_create_dir_tree( file_browser );
+-        gtk_toggle_tool_button_set_active ( file_browser->dir_tree_btn, TRUE );
+         break;
+     case PTK_FB_SIDE_PANE_BOOKMARKS:
+         gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW( file_browser->side_view_scroll ),
+                                         GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC );
+         file_browser->side_view = ptk_file_browser_create_location_view( file_browser );
+-        gtk_toggle_tool_button_set_active ( file_browser->location_btn, TRUE );
+         break;
+     }
+     gtk_container_add( GTK_CONTAINER( file_browser->side_view_scroll ),
+@@ -2776,15 +2774,8 @@ static void on_show_dir_tree( GtkWidget* item, PtkFileBrowser* file_browser )
+         ptk_file_browser_set_side_pane_mode( file_browser, PTK_FB_SIDE_PANE_DIR_TREE );
+ }
+ 
+-static PtkToolItemEntry side_pane_bar[] = {
+-                                              PTK_RADIO_TOOL_ITEM( NULL, "gtk-harddisk", N_( "Location" ), on_show_location_view ),
+-                                              PTK_RADIO_TOOL_ITEM( NULL, "gtk-open", N_( "Directory Tree" ), on_show_dir_tree ),
+-                                              PTK_TOOL_END
+-                                          };
+-
+ static void ptk_file_browser_create_side_pane( PtkFileBrowser* file_browser )
+ {
+-    GtkWidget * toolbar = gtk_toolbar_new ();
+     GtkTooltips* tooltips = gtk_tooltips_new ();
+     file_browser->side_pane = gtk_vbox_new( FALSE, 0 );
+     file_browser->side_view_scroll = gtk_scrolled_window_new( NULL, NULL );
+@@ -2812,14 +2803,6 @@ static void ptk_file_browser_create_side_pane( PtkFileBrowser* file_browser )
+                         GTK_WIDGET( file_browser->side_view_scroll ),
+                         TRUE, TRUE, 0 );
+ 
+-    gtk_toolbar_set_style( GTK_TOOLBAR( toolbar ), GTK_TOOLBAR_ICONS );
+-    side_pane_bar[ 0 ].ret = ( GtkWidget** ) ( GtkWidget * ) & file_browser->location_btn;
+-    side_pane_bar[ 1 ].ret = ( GtkWidget** ) ( GtkWidget * ) & file_browser->dir_tree_btn;
+-    ptk_toolbar_add_items_from_data( toolbar, side_pane_bar,
+-                                     file_browser, tooltips );
+-
+-    gtk_box_pack_start( GTK_BOX( file_browser->side_pane ),
+-                        toolbar, FALSE, FALSE, 0 );
+     gtk_widget_show_all( file_browser->side_pane );
+     gtk_paned_pack1( GTK_PANED( file_browser ),
+                      file_browser->side_pane, FALSE, TRUE );
+@@ -2837,16 +2820,6 @@ void ptk_file_browser_show_side_pane( PtkFileBrowser* file_browser,
+         {
+             side_pane_chdir( file_browser, ptk_file_browser_get_cwd( file_browser ) );
+         }
+-
+-        switch ( mode )
+-        {
+-        case PTK_FB_SIDE_PANE_BOOKMARKS:
+-            gtk_toggle_tool_button_set_active( file_browser->location_btn, TRUE );
+-            break;
+-        case PTK_FB_SIDE_PANE_DIR_TREE:
+-            gtk_toggle_tool_button_set_active( file_browser->dir_tree_btn, TRUE );
+-            break;
+-        }
+     }
+     gtk_widget_show( file_browser->side_pane );
+     file_browser->show_side_pane = TRUE;
+diff --git a/src/ptk/ptk-file-browser.h b/src/ptk/ptk-file-browser.h
+index bcf0726..cc6234e 100644
+--- a/src/ptk/ptk-file-browser.h
++++ b/src/ptk/ptk-file-browser.h
+@@ -60,10 +60,6 @@ struct _PtkFileBrowser
+     int n_sel_files;
+     off_t sel_size;
+ 
+-    /* side pane */
+-    GtkToggleToolButton* location_btn;
+-    GtkToggleToolButton* dir_tree_btn;
+-
+     GtkSortType sort_type;
+     PtkFBSidePaneMode side_pane_mode : 4;
+     PtkFBSortOrder sort_order : 4;
