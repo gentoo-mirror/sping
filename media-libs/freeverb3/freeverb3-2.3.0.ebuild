@@ -1,6 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
+inherit eutils
 
 DESCRIPTION="High Quality Reverb and Impulse Response Convolution library including XMMS/Audacious Effect plugins"
 HOMEPAGE="http://freeverb3.sourceforge.net/"
@@ -8,13 +10,19 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="x86 amd64"
+KEYWORDS="~x86"
 IUSE="audacious plugdouble sse sse2 3dnow forcefpu sample jack"
 
 DEPEND=">=sci-libs/fftw-3.0.1
 	audacious? ( media-sound/audacious
 		>=media-libs/libsndfile-1.0.11 )
 	jack? ( media-sound/jack-audio-connection-kit )"
+
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+	epatch "${FILESDIR}"/${PN}-2.3.0-fix-implicit.patch || die "epatch failed"
+}
 
 src_compile() {
 	econf \
