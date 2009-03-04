@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="hal vanilla"
+IUSE="hal patch-kill-sidebar-buttons"
 
 RDEPEND="virtual/fam
 	x11-libs/cairo
@@ -28,7 +28,11 @@ DEPEND="${RDEPEND}
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	use vanilla || epatch "${FILESDIR}"/${PN}-0.5-kill-sidebar-buttons.patch || die "epatch failed"
+
+	if use patch-kill-sidebar-buttons ; then
+		epatch "${FILESDIR}"/${PN}-0.5-kill-sidebar-buttons.patch \
+		|| die "epatch failed"
+	fi
 }
 
 src_compile() {
