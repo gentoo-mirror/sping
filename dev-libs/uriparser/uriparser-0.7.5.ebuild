@@ -3,26 +3,29 @@
 # $Header: /var/cvsroot/gentoo-x86/dev-libs/uriparser/uriparser-0.7.4.ebuild,v 1.1 2009/03/01 18:14:03 patrick Exp $
 
 DESCRIPTION="Uriparser is a strictly RFC 3986 compliant URI parsing library in C"
+
 HOMEPAGE="http://uriparser.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
 
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="doc"
+IUSE="doc test"
 
 RDEPEND=""
-DEPEND="doc? ( app-doc/doxygen )"
+DEPEND="dev-util/pkgconfig
+	doc? ( >=app-doc/doxygen-1.5.8
+		>=x11-libs/qt-assistant-4.0 )
+	test? ( >=dev-util/libcpptest-1.1.0 )"
 
 src_compile() {
-	econf --disable-dependency-tracking
+	econf \
+		$(use_enable doc) \
+		$(use_enable test) \
+		--disable-dependency-tracking \
+		--docdir=/usr/share/doc/${PF}/ \
+		|| die "econf failed"
 	emake || die "emake failed"
-
-	if use doc; then
-		cd doc
-		econf
-		doxygen Doxyfile || die "doxygen failed."
-	fi
 }
 
 src_install() {
@@ -31,6 +34,7 @@ src_install() {
 	dohtml doc/*.htm
 
 	if use doc; then
-		dohtml doc/html/*
+		insinto /usr/share/doc/${PF}/
+		doins doc/*.qch  # Avoiding dodoc's compression
 	fi
 }
