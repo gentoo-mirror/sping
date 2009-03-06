@@ -6,7 +6,8 @@ inherit autotools
 
 DESCRIPTION="A library for managing license metadata"
 HOMEPAGE="http://wiki.creativecommons.org/Liblicense"
-SRC_URI="http://mirrors.creativecommons.org/software/${PN}/${P}.tar.gz"
+SRC_URI="http://mirrors.creativecommons.org/software/${PN}/${P}.tar.gz
+	mirror://sourceforge/cctools/${P}.tar.gz"
 LICENSE="LGPL-2.1"
 
 SLOT="0"
