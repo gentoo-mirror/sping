@@ -1,8 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit gnome2
+inherit eutils gnome2
 
 DESCRIPTION="Python bindings for Nautilus extensions"
 HOMEPAGE="http://svn.gnome.org/viewcvs/nautilus-python/"
@@ -20,7 +20,12 @@ DEPEND=">=dev-lang/python-2.3
 	>=dev-python/gnome-python-2.12"
 RDEPEND="${DEPEND}"
 
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+	epatch "${FILESDIR}"/${PN}-0.4.3-remove-getvfsfileinfo.patch || die "epatch failed"
+}
+
 src_install() {
 	emake DESTDIR="${D}" install || die "install failed"
 }
-
