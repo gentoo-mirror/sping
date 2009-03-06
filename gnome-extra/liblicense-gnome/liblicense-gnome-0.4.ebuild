@@ -19,6 +19,13 @@ RDEPEND=">=media-libs/liblicense-0.4
 	>=gnome-extra/nautilus-python-0.5.0-r1"
 DEPEND="${RDEPEND}"
 
+src_unpack() {
+	unpack ${A}
+	cd "${S}"
+	epatch "${FILESDIR}"/${PN}-0.4-destdir.patch || die "epatch failed"
+	eautoreconf || die "eautoreconf failed"
+}
+
 src_install() {
 	emake DESTDIR="${D}" install
 }
