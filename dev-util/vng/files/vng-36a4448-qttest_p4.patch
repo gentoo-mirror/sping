@@ -1,0 +1,33 @@
+From fd5f909fb7b00f5b68a4a35ce4f54dacb66af911 Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Sat, 7 Mar 2009 07:22:18 +0100
+Subject: [PATCH] Replace "load(qttest_p4)" by "CONFIG += qtestlib"
+
+---
+ tests/commit/commit.pro |    2 +-
+ tests/cursor/cursor.pro |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/commit/commit.pro b/tests/commit/commit.pro
+index 3b0c8b3..d8ae505 100644
+--- a/tests/commit/commit.pro
++++ b/tests/commit/commit.pro
+@@ -1,4 +1,4 @@
+-load(qttest_p4)
++CONFIG += qtestlib
+ DEPENDPATH += ../../src
+ INCLUDEPATH += ../../src
+ 
+diff --git a/tests/cursor/cursor.pro b/tests/cursor/cursor.pro
+index f798f27..5d8f1a8 100644
+--- a/tests/cursor/cursor.pro
++++ b/tests/cursor/cursor.pro
+@@ -1,4 +1,4 @@
+-load(qttest_p4)
++CONFIG += qtestlib
+ DEPENDPATH = ../../src
+ INCLUDEPATH += ../../src
+ 
+-- 
+1.6.1.3
+
