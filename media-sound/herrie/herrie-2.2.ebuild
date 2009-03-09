@@ -30,7 +30,7 @@ DEPEND="sys-libs/ncurses
 	pulseaudio? ( media-sound/pulseaudio )
 	sndfile? ( media-libs/libsndfile )
 	vorbis? ( media-libs/libvorbis )
-	xspf? ( >=media-libs/libspiff-1.0.0 )
+	xspf? ( >=media-libs/libxspf-1.2.0 )
 	!ao? ( !alsa? ( !pulseaudio? ( !oss? ( media-libs/alsa-lib ) ) ) )
 	"
 RDEPEND="${DEPEND}"
@@ -51,6 +51,7 @@ src_unpack() {
 	cd "${S}"
 
 	epatch "${FILESDIR}/${PN}-1.8-chost.patch"
+	epatch "${FILESDIR}/${PN}-2.2-libxspf.patch"
 }
 
 src_compile() {
