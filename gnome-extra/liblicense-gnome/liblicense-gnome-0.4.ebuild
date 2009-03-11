@@ -14,7 +14,7 @@ KEYWORDS="~x86"
 
 IUSE=""
 
-RDEPEND=">=media-libs/liblicense-0.4
+RDEPEND="=media-libs/liblicense-0.4
 	>=dev-python/pygtk-2.10
 	>=gnome-extra/nautilus-python-0.5.0-r1"
 DEPEND="${RDEPEND}"
