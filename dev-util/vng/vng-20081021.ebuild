@@ -4,7 +4,7 @@
 
 inherit qt4
 
-MY_PV="36a4448ba3bfd3a5d7385b57b4fd7457af28e718"
+MY_PV="f1e52457212860960122064cc008ee2f307a5797"
 MY_P="${PN}-${MY_PV}"
 
 DESCRIPTION="Darcs-like Git porcelain"
@@ -26,7 +26,6 @@ S="${WORKDIR}/${PN}"
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}"/${PN}-36a4448-qttest_p4.patch || die "epatch failed"
 }
 
 src_compile() {
