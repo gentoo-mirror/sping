@@ -1,6 +1,8 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/git/git-1.6.0.6.ebuild,v 1.8 2009/01/01 10:33:51 armin76 Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/git/git-1.6.2.ebuild,v 1.3 2009/03/06 07:23:30 fauli Exp $
+
+EAPI=2
 
 inherit toolchain-funcs eutils elisp-common perl-module bash-completion git
 
@@ -8,7 +10,7 @@ MY_PV="${PV/_rc/.rc}"
 MY_P="${PN}-${MY_PV}"
 
 DESCRIPTION="GIT - the stupid content tracker, the revision control system heavily used by the Linux kernel team"
-HOMEPAGE="http://git.or.cz/"
+HOMEPAGE="http://www.git-scm.com/"
 SRC_URI=""
 EGIT_BRANCH="master"
 EGIT_REPO_URI="git://git.kernel.org/pub/scm/git/git.git"
@@ -17,7 +19,7 @@ EGIT_REPO_URI="git://git.kernel.org/pub/scm/git/git.git"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="curl cgi doc emacs gtk iconv mozsha1 perl ppcsha1 tk threads webdav xinetd cvs subversion vim-syntax"
+IUSE="curl cgi doc emacs gtk iconv mozsha1 perl ppcsha1 tk threads webdav xinetd cvs subversion"
 
 DEPEND="
 	!app-misc/git
@@ -43,7 +45,7 @@ RDEPEND="${DEPEND}
 			dev-perl/Authen-SASL
 			cgi? ( virtual/perl-CGI )
 			cvs? ( >=dev-util/cvsps-2.1 dev-perl/DBI dev-perl/DBD-SQLite )
-			subversion? ( dev-util/subversion dev-perl/libwww-perl dev-perl/TermReadKey )
+			subversion? ( dev-util/subversion[-dso] dev-perl/libwww-perl dev-perl/TermReadKey )
 			)
 	gtk?  ( >=dev-python/pygtk-2.8 )"
 
@@ -116,17 +118,14 @@ VERSION_GEN
 	sed -i 's/DOCBOOK2X_TEXI=docbook2x-texi/DOCBOOK2X_TEXI=docbook2texi.pl/' \
 		Documentation/Makefile || die "sed failed"
 
-	epatch "${FILESDIR}"/20080626-git-1.5.6.1-noperl.patch || die "epatch failed"
-	epatch "${FILESDIR}"/20081123-git-1.6.0.4-noperl-cvsserver.patch || die "epatch failed"
+	epatch "${FILESDIR}"/20090305-git-1.6.2-noperl.patch
 
 	sed -i \
 		-e 's:^\(CFLAGS =\).*$:\1 $(OPTCFLAGS) -Wall:' \
 		-e 's:^\(LDFLAGS =\).*$:\1 $(OPTLDFLAGS):' \
-		-e "s:^\(CC = \).*$:\1$(tc-getCC):" \
-		-e "s:^\(AR = \).*$:\1$(tc-getAR):" \
+		-e 's:^\(CC = \).*$:\1$(OPTCC):' \
+		-e 's:^\(AR = \).*$:\1$(OPTAR):' \
 		Makefile || die "sed failed"
-
-	exportmakeopts
 }
 
 git_emake() {
@@ -134,9 +133,15 @@ git_emake() {
 		DESTDIR="${D}" \
 		OPTCFLAGS="${CFLAGS}" \
 		OPTLDFLAGS="${LDFLAGS}" \
+		OPTCC="$(tc-getCC)" \
+		OPTAR="$(tc-getAR)" \
 		prefix=/usr \
 		htmldir=/usr/share/doc/${PF} \
 		"$@"
+}
+
+src_configure() {
+	exportmakeopts
 }
 
 src_compile() {
@@ -149,7 +154,7 @@ src_compile() {
 	fi
 
 	if use emacs ; then
-		elisp-compile contrib/emacs/{,vc-}git.el || die "emacs modules failed"
+		elisp-compile contrib/emacs/git.el || die "emacs modules failed"
 	fi
 	if use perl && use cgi ; then
 		git_emake \
@@ -173,11 +178,11 @@ src_install() {
 
 	if use emacs ; then
 		elisp-install ${PN} contrib/emacs/git.{el,elc} || die
-		elisp-install ${PN}/compat contrib/emacs/vc-git.{el,elc} || die
+		#elisp-install ${PN}/compat contrib/emacs/vc-git.{el,elc} || die
 		# don't add automatically to the load-path, so the sitefile
 		# can do a conditional loading
 		touch "${D}${SITELISP}/${PN}/compat/.nosearch"
-		elisp-site-file-install "${FILESDIR}/${SITEFILE}" || die
+		elisp-site-file-install "${FILESDIR}"/${SITEFILE} || die
 	fi
 
 	if use gtk ; then
@@ -188,13 +193,6 @@ src_install() {
 	dobin contrib/fast-import/git-p4
 	dodoc contrib/fast-import/git-p4.txt
 	newbin contrib/fast-import/import-tars.perl import-tars
-
-	if use vim-syntax ; then
-		insinto /usr/share/vim/vimfiles/syntax/
-		doins contrib/vim/syntax/gitcommit.vim
-		insinto /usr/share/vim/vimfiles/ftdetect/
-		newins "${FILESDIR}"/vim-ftdetect-gitcommit.vim gitcommit.vim
-	fi
 
 	dodir /usr/share/${PN}/contrib
 	# The following are excluded:
