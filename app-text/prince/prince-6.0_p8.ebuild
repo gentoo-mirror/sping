@@ -1,21 +1,29 @@
+# Copyright 1999-2009 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
 inherit eutils
 
-MyP="${P/_p/r}-linux"
-DESCRIPTION="Prince is a computer program that converts XML and HTML into PDF documents."
+MY_P="${P/_p/r}-linux"
+
+DESCRIPTION="Converts XML/HTML to PDF."
+
 HOMEPAGE="http://www.princexml.com/"
-SRC_URI="http://www.princexml.com/download/${MyP}.tar.gz"
+SRC_URI="http://www.princexml.com/download/${MY_P}.tar.gz"
 LICENSE="Prince-EULA"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~x86"
 IUSE=""
-DEPEND=""
-RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${MyP}"
+DEPEND=""
+RDEPEND=""
+
+S="${WORKDIR}/${MY_P}"
 
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
+
 	epatch "${FILESDIR}/destdir.patch"
 }
 
