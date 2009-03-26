@@ -1,0 +1,33 @@
+From 57a505be57cddfe31af2d4a9ac957aacc0d59637 Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Thu, 26 Mar 2009 23:14:14 +0100
+Subject: [PATCH 2/3] No longer truncate original file one copy-paste-rename-escape
+
+---
+ src/ptk/ptk-file-task.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/src/ptk/ptk-file-task.c b/src/ptk/ptk-file-task.c
+index c2d852b..b24ffec 100644
+--- a/src/ptk/ptk-file-task.c
++++ b/src/ptk/ptk-file-task.c
+@@ -502,6 +502,7 @@ gboolean query_overwrite( PtkFileTask* task, char** new_dest )
+             g_free( dir_name );
+         }
+         break;
++    case GTK_RESPONSE_DELETE_EVENT: /* escape was pressed */
+     case GTK_RESPONSE_CANCEL:
+         vfs_file_task_abort( task->task );
+         break;
+@@ -513,6 +514,7 @@ gboolean query_overwrite( PtkFileTask* task, char** new_dest )
+                                     ( GSourceFunc ) open_up_progress_dlg,
+                                     ( gpointer ) task );
+     }
+-    return response != GTK_RESPONSE_CANCEL;
++    return (response != GTK_RESPONSE_DELETE_EVENT)
++        && (response != GTK_RESPONSE_CANCEL);
+ }
+ 
+-- 
+9999.20090323.91408042768c
+

@@ -29,6 +29,11 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
+	# Bugfix patches
+	epatch "${FILESDIR}"/pcmanfm-0.5-fix-cmdline.patch
+	epatch "${FILESDIR}"/pcmanfm-0.5-fix-copy-paste-rename-escape.patch
+
+	# Feature patches
 	if use patch-kill-sidebar-buttons ; then
 		epatch "${FILESDIR}"/${PN}-0.5-kill-sidebar-buttons.patch \
 		|| die "epatch failed"
