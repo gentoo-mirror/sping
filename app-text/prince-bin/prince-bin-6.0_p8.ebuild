@@ -4,7 +4,8 @@
 
 inherit eutils
 
-MY_P="${P/_p/r}-linux"
+MY_PN="prince"
+MY_P="${MY_PN}-${PV/_p/r}-linux"
 
 DESCRIPTION="Converts XML/HTML to PDF."
 
@@ -24,7 +25,7 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
-	epatch "${FILESDIR}/destdir.patch"
+	epatch "${FILESDIR}"/${PN}-6.0-destdir.patch
 }
 
 src_install() {
