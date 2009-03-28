@@ -33,11 +33,14 @@ src_unpack() {
 	epatch "${FILESDIR}"/pcmanfm-0.5-fix-cmdline.patch
 	epatch "${FILESDIR}"/pcmanfm-0.5-fix-copy-paste-rename-escape.patch
 
-	# Feature patches
+	# Controversal feature patches
 	if use patch-kill-sidebar-buttons ; then
 		epatch "${FILESDIR}"/${PN}-0.5-kill-sidebar-buttons.patch \
 		|| die "epatch failed"
 	fi
+
+	# Non-controversal feature patches
+	epatch "${FILESDIR}"/pcmanfm-0.5-treeview-nav-v2.patch
 }
 
 src_compile() {
