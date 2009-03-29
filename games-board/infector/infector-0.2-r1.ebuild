@@ -8,8 +8,8 @@ inherit games
 
 DESCRIPTION="Ataxx/Hexxagon clone."
 
-HOMEPAGE="http://${PN}.mangobrain.co.uk/"
-SRC_URI="http://${PN}.mangobrain.co.uk/downloads/${P}.tar.gz"
+HOMEPAGE="http://infector.mangobrain.co.uk/"
+SRC_URI="http://infector.mangobrain.co.uk/downloads/${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -17,10 +17,11 @@ KEYWORDS="~x86"
 IUSE=""
 
 RDEPEND=">=dev-cpp/gtkmm-2.12
-	>=dev-cpp/libglademm-2.6
-	sys-devel/gettext"
+	>=dev-cpp/libglademm-2.6"
+
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
+	sys-devel/gettext
 	dev-util/intltool
 	gnome-base/librsvg
 	x11-misc/xdg-utils"
