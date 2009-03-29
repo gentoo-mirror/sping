@@ -1,0 +1,56 @@
+From cd27844c1c8e3de86c2525618198f0854c6642cd Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Sun, 29 Mar 2009 05:12:18 +0200
+Subject: [PATCH] Make shift-delete work like plain delete, no action at all before
+
+---
+ src/desktop/desktop-window.c |   10 ++++++++++
+ src/ptk/ptk-file-browser.c   |   11 +++++++++++
+ 2 files changed, 21 insertions(+), 0 deletions(-)
+
+diff --git a/src/desktop/desktop-window.c b/src/desktop/desktop-window.c
+index 13d7e0c..6b47724 100644
+--- a/src/desktop/desktop-window.c
++++ b/src/desktop/desktop-window.c
+@@ -1543,6 +1543,16 @@ gboolean on_key_press( GtkWidget* w, GdkEventKey* evt )
+             break;
+         }
+     }
++    else if ( modifier == GDK_SHIFT_MASK )
++    {
++        switch ( evt->keyval )
++        {
++        case GDK_Delete:
++            if( sels )
++                ptk_delete_files( NULL, vfs_get_desktop_dir(), sels );
++            break;
++        }
++    }
+     else if ( modifier == 0 )
+     {
+         switch ( evt->keyval )
+diff --git a/src/ptk/ptk-file-browser.c b/src/ptk/ptk-file-browser.c
+index af9af33..102a2b7 100644
+--- a/src/ptk/ptk-file-browser.c
++++ b/src/ptk/ptk-file-browser.c
+@@ -1034,6 +1034,17 @@ on_folder_view_key_press_event ( GtkWidget *widget,
+             return FALSE;
+         }
+     }
++    else if ( modifier == GDK_SHIFT_MASK )
++    {
++        switch ( event->keyval )
++        {
++        case GDK_Delete:
++            ptk_file_browser_delete( file_browser );
++            break;
++        default:
++            return FALSE;
++        }
++    }
+     else if ( modifier == 0 )
+     {
+         switch ( event->keyval )
+-- 
+1.6.2.1-2808-gb0085a7
+
