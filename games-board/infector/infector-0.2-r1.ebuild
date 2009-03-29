@@ -26,6 +26,13 @@ DEPEND="${RDEPEND}
 	gnome-base/librsvg
 	x11-misc/xdg-utils"
 
+copy_stuff() {
+	if [[ -d "$1" ]] ; then
+		dodir "$2" || die "dodir failed"
+		cp -LR "$1"/* "${D}"/"$2" || die "cp failed"
+	fi
+}
+
 src_install() {
 	XDG_UTILS_INSTALL_MODE=user \
 		emake DESTDIR="${D}" install \
@@ -34,16 +41,7 @@ src_install() {
 	# xdg-utils workaround
 	cd "${PORTAGE_BUILDDIR}"/homedir/ || die "cd failed"
 	chmod -R a+r . || die "chmod failed"
-	if [[ -d .gnome/apps ]] ; then
-		dodir /usr/share/gnome/apps/ || die "dodir failed"
-		cp -LR .gnome/apps/* "${D}"/usr/share/gnome/apps/ || die "cp failed"
-	fi
-	if [[ -d .local/share ]] ; then
-		dodir /usr/share/ || die "dodir failed"
-		cp -LR .local/share/* "${D}"/usr/share/ || die "cp failed"
-	fi
-	if [[ -d .kde/share ]] ; then
-		dodir /usr/share/ || die "dodir failed"
-		cp -LR .kde/share/* "${D}"/usr/share/ || die "cp failed"
-	fi
+	copy_stuff .gnome/apps /usr/share/gnome/apps/
+	copy_stuff .local/share /usr/share/
+	copy_stuff .kde/share /usr/share/
 }
