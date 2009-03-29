@@ -4,7 +4,7 @@
 
 EAPI="1"
 
-DESCRIPTION="XXX"
+DESCRIPTION="'Back to the sources' music disk by NightRadio"
 
 HOMEPAGE="http://www.warmplace.ru/music/${PN}/"
 SRC_URI="http://www.warmplace.ru/music/${PN}/${PN}.zip"
@@ -42,4 +42,7 @@ cd /usr/lib/${PF}/ || exit 1
 )
 EOF
 	dobin ${PN} || die "dobin failed"
+
+	mv info_en.txt README
+	dodoc README || die "dodoc failed"
 }
