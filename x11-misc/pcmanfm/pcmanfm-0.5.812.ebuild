@@ -7,12 +7,12 @@ inherit eutils fdo-mime
 DESCRIPTION="Extremely fast and lightweight tabbed file manager"
 
 HOMEPAGE="http://pcmanfm.sourceforge.net/"
-SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
+SRC_URI="http://www.hartwork.org/public/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE="hal patch-kill-sidebar-buttons"
+KEYWORDS="~x86"
+IUSE="hal"
 
 RDEPEND="virtual/fam
 	x11-libs/cairo
@@ -24,25 +24,6 @@ RDEPEND="virtual/fam
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
 	sys-devel/gettext"
-
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-
-	# Bugfix patches
-	epatch "${FILESDIR}"/${PN}-0.5-fix-cmdline.patch
-	epatch "${FILESDIR}"/${PN}-0.5-fix-copy-paste-rename-escape.patch
-
-	# Controversal feature patches
-	if use patch-kill-sidebar-buttons ; then
-		epatch "${FILESDIR}"/${PN}-0.5-kill-sidebar-buttons.patch \
-		|| die "epatch failed"
-	fi
-
-	# Non-controversal feature patches
-	epatch "${FILESDIR}"/${PN}-0.5-treeview-nav-v2.patch
-	epatch "${FILESDIR}"/${PN}-0.5-shift-delete.patch
-}
 
 src_compile() {
 	econf $(use_enable hal) || die "econf failed"
