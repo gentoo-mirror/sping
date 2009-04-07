@@ -4,9 +4,11 @@
 
 inherit eutils autotools
 
+MY_PN=bs2b
+
 DESCRIPTION="Bauer stereophonic-to-binaural DSP library"
 HOMEPAGE="http://bs2b.sourceforge.net/"
-SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
+SRC_URI="mirror://sourceforge/${MY_PN}/${P}.tar.bz2"
 
 LICENSE="MIT"
 SLOT="0"
