@@ -22,7 +22,6 @@ RDEPEND="dev-lang/python
 	dev-python/imaging
 	!gs? ( app-text/xpdf )
 	gs? ( virtual/ghostscript )
-	app-text/pdftk
 	x11-misc/xdg-utils
 	mplayer? ( media-video/mplayer )"
 DEPEND=""
