@@ -4,17 +4,15 @@
 
 DESCRIPTION="Tool to produce LaTeX Beamer code from wiki-like input."
 
-MY_P="${PN}"
-
 HOMEPAGE="http://wiki2beamer.sourceforge.net/"
-SRC_URI="mirror://sourceforge/${PN}/${MY_P}.zip"
+SRC_URI="mirror://sourceforge/${PN}/${P}.zip"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86"
 IUSE=""
 
-S="${WORKDIR}/${MY_P}"
+S="${WORKDIR}/${PN}"
 
 RDEPEND="dev-lang/python"
 DEPEND=""
