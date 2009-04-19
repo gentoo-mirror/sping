@@ -1,0 +1,40 @@
+From 59c4fae3dbc13af0c007a92832eaa4fede5f2183 Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Sun, 19 Apr 2009 02:53:42 +0200
+Subject: [PATCH] Compile fix
+
+---
+ hox_Client/hoxPlayersUI.cpp     |    2 +-
+ hox_Client/hoxTablesDialog.cpp  |    2 +-
+ hox_Client/hoxTablesDialog.cpp~ |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/hox_Client/hoxPlayersUI.cpp b/hox_Client/hoxPlayersUI.cpp
+index e600b81..5b9c017 100644
+--- a/hox_Client/hoxPlayersUI.cpp
++++ b/hox_Client/hoxPlayersUI.cpp
+@@ -89,7 +89,7 @@ END_EVENT_TABLE()
+ int wxCALLBACK
+ ComparePlayersCallBack( long item1, 
+                         long item2, 
+-                        long sortOrder )
++                        wxIntPtr sortOrder )
+ {
+     if (item1 < item2)  return sortOrder == hoxPlayersUI::PLAYERS_SORT_ASCENDING ? -1 : 1;
+     if (item1 > item2)  return sortOrder == hoxPlayersUI::PLAYERS_SORT_ASCENDING ? 1 : -1;
+diff --git a/hox_Client/hoxTablesDialog.cpp b/hox_Client/hoxTablesDialog.cpp
+index c42d661..8dc00e7 100644
+--- a/hox_Client/hoxTablesDialog.cpp
++++ b/hox_Client/hoxTablesDialog.cpp
+@@ -61,7 +61,7 @@ END_EVENT_TABLE()
+ int wxCALLBACK
+ CompareTablesCallBack( long item1, 
+                        long item2, 
+-                       long sortData /* not used */)
++                       wxIntPtr sortData /* not used */)
+ {
+     if (item1 < item2)  return -1;
+     if (item1 > item2)  return 1;
+-- 
+1.6.3.rc0.1.gf800.dirty
+
