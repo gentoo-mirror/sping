@@ -4,16 +4,13 @@
 
 EAPI="2"
 
-inherit eutils versionator flag-o-matic
+inherit eutils versionator flag-o-matic subversion
 
 DESCRIPTION="GTK+ version of wxWidgets, a cross-platform C++ GUI toolkit."
 HOMEPAGE="http://wxwidgets.org/"
 
-MY_P="wxWidgets-2009-04-18"
-
-# we use the wxPython tarballs because they include the full wxGTK sources and
-# docs, and are released more frequently than wxGTK.
-SRC_URI="http://www.hartwork.org/public/${MY_P}.tar.gz"
+ESVN_REPO_URI="http://svn.wxwidgets.org/svn/wx/wxWidgets/trunk"
+SRC_URI=""
 
 KEYWORDS=""
 IUSE="X doc debug gnome gstreamer odbc opengl pch sdl"
@@ -23,8 +20,8 @@ RDEPEND="
 	odbc?   ( dev-db/unixODBC )
 	sdl?    ( media-libs/libsdl )
 	X?  (
-		>=x11-libs/gtk+-2.4
-		>=dev-libs/glib-2.4
+		>=x11-libs/gtk+-2.14
+		>=dev-libs/glib-2.18
 		media-libs/jpeg
 		media-libs/tiff
 		x11-libs/libSM
@@ -51,16 +48,13 @@ LICENSE="wxWinLL-3
 		odbc?	( LGPL-2 )
 		doc?	( wxWinFDL-3 )"
 
-S="${WORKDIR}/${MY_P}"
-
-src_prepare() {
-	cd "${S}"
-# TODO x4
+#src_prepare() {
+#	cd "${S}"
 #	epatch "${FILESDIR}"/${PN}-2.6.3-unicode-odbc.patch
 #	epatch "${FILESDIR}"/${PN}-2.8.8-collision.patch
 #	epatch "${FILESDIR}"/${PN}-2.8.6-wxrc_link_fix.patch
 #	epatch "${FILESDIR}"/${PN}-2.8.7-mmedia.patch              # Bug #174874
-}
+#}
 
 src_configure() {
 	local myconf
@@ -133,7 +127,7 @@ src_install() {
 	fi
 
 	cd "${S}"/docs
-	dodoc changes.txt readme.txt todo30.txt
+	dodoc changes.txt readme.txt
 	newdoc base/readme.txt base_readme.txt
 	newdoc gtk/readme.txt gtk_readme.txt
 
