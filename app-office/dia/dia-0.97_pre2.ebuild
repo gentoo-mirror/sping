@@ -10,7 +10,8 @@ LICENSE="GPL-2"
 
 # dia used -1 instead of .1 for the new version.
 MY_PV_MM=$(get_version_component_range 1-2 )
-SRC_URI="mirror://gnome/sources/${PN}/${MY_PV_MM}/${P}.tar.bz2"
+MY_P="${P/_/-}"
+SRC_URI="mirror://gnome/sources/${PN}/${MY_PV_MM}/${MY_P}.tar.bz2"
 
 SLOT="0"
 KEYWORDS="alpha amd64 hppa ia64 ppc ppc64 sparc x86 ~x86-fbsd"
@@ -46,6 +47,8 @@ DEPEND="${RDEPEND}
 
 DOCS="AUTHORS ChangeLog KNOWN_BUGS MAINTAINERS NEWS README RELEASE-PROCESS THANKS TODO"
 
+S="${WORKDIR}/${MY_P}"
+
 pkg_setup() {
 	G2CONF="${G2CONF}
 		$(use_with cairo)
@@ -64,16 +67,16 @@ src_unpack() {
 	sed -i -e '/AM_CHECK_PYMOD/d' configure.in
 
 	# Fix compilation in a gnome environment, bug #159831
-	epatch "${FILESDIR}/${PN}-0.96.1-gnome-doc.patch"
+#	epatch "${FILESDIR}/${PN}-0.96.1-gnome-doc.patch"
 
 	# Fix broken XML in documentation
-	epatch "${FILESDIR}/${PN}-0.96.1-xml-fixes.patch"
+#	epatch "${FILESDIR}/${PN}-0.96.1-xml-fixes.patch"
 
 	# Skip man generation
-	use doc || sed -i -e '/if HAVE_DB2MAN/,/man_MANS/d' doc/*/Makefile.am
+#	use doc || sed -i -e '/if HAVE_DB2MAN/,/man_MANS/d' doc/*/Makefile.am
 
 	# Fix compilation QA, bug #191673
-	epatch "${FILESDIR}/${PN}-0.96.1-64bit-fixes.patch"
+#	epatch "${FILESDIR}/${PN}-0.96.1-64bit-fixes.patch"
 
 	# Fix tests
 	echo "dia.desktop.in" >> po/POTFILES.skip
