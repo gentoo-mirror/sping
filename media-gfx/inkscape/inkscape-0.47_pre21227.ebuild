@@ -4,17 +4,19 @@
 
 EAPI="2"
 
-inherit gnome2 eutils
+inherit gnome2 eutils versionator
+
+MY_PV="${PV/*_pre/}"
 
 DESCRIPTION="A SVG based generic vector-drawing program"
 HOMEPAGE="http://www.inkscape.org/"
-SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
+SRC_URI="http://www.hartwork.org/public/${PN}-${MY_PV}.tar.bz2"
 
 SLOT="0"
 LICENSE="GPL-2 LGPL-2.1"
 KEYWORDS="amd64 hppa ppc ppc64 sparc x86"
 IUSE="dia doc gnome inkjar jabber lcms mmx perl postscript spell wmf"
-RESTRICT="test"
+RESTRICT="test mirror"
 
 COMMON_DEPEND="
 	>=virtual/poppler-glib-0.8.3[cairo]
@@ -61,6 +63,8 @@ DEPEND="${COMMON_DEPEND}
 	x11-libs/libX11
 	>=dev-util/intltool-0.29"
 
+S="${WORKDIR}/${PN}-${MY_PV}"
+
 pkg_setup() {
 	G2CONF="${G2CONF} --with-xft"
 	G2CONF="${G2CONF} $(use_with spell gtkspell)"
@@ -73,11 +77,13 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/${P}-gcc43.patch
-	epatch "${FILESDIR}"/${P}-poppler-0.8.3.patch
-	epatch "${FILESDIR}"/${P}-bug-174720-0.patch
-	epatch "${FILESDIR}"/${P}-bug-174720-1.patch
-	epatch "${FILESDIR}"/${P}-bug-214171.patch
+	epatch "${FILESDIR}"/${PN}-0.46-gcc43.patch
+#	epatch "${FILESDIR}"/${PN}-0.46-poppler-0.8.3.patch
+#	epatch "${FILESDIR}"/${PN}-0.46-bug-174720-0.patch
+#	epatch "${FILESDIR}"/${PN}-0.46-bug-174720-1.patch
+#	epatch "${FILESDIR}"/${PN}-0.46-bug-214171.patch
+
+	epatch "${FILESDIR}"/${PN}-21227-include-zlib.patch
 
 	gnome2_src_prepare
 }
