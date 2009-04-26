@@ -42,19 +42,19 @@ DEPEND="${RDEPEND}
 
 PDEPEND=">=app-admin/eselect-wxwidgets-0.7"
 
-SLOT="2.8"
+SLOT="2.9"
 LICENSE="wxWinLL-3
 		GPL-2
 		odbc?	( LGPL-2 )
 		doc?	( wxWinFDL-3 )"
 
-#src_prepare() {
-#	cd "${S}"
+src_prepare() {
+	cd "${S}"
 #	epatch "${FILESDIR}"/${PN}-2.6.3-unicode-odbc.patch
-#	epatch "${FILESDIR}"/${PN}-2.8.8-collision.patch
+	epatch "${FILESDIR}"/${PN}-9999-collision.patch
 #	epatch "${FILESDIR}"/${PN}-2.8.6-wxrc_link_fix.patch
 #	epatch "${FILESDIR}"/${PN}-2.8.7-mmedia.patch              # Bug #174874
-#}
+}
 
 src_configure() {
 	local myconf
