@@ -16,4 +16,6 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
+RDEPEND="net-zope/zopeinterface"
+
 S="${WORKDIR}/${MY_P}"
