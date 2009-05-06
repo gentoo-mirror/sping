@@ -18,3 +18,5 @@ IUSE=""
 DEPEND="app-arch/unzip"
 
 S="${WORKDIR}/${MY_P}"
+
+RDEPEND=">=dev-python/decoratortools-1.5"
