@@ -12,3 +12,7 @@ LICENSE="Repoze"
 KEYWORDS=""
 SLOT="0"
 IUSE=""
+
+RDEPEND=">=dev-python/repoze.what-1.0.4
+	>=dev-python/pylons-0.9.7
+	>=dev-python/decorator-3.0"
