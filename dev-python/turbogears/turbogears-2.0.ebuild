@@ -26,25 +26,25 @@ IUSE="test"
 
 # this package is not yet py2.6 ready. Keep deps at =py-2.{4,5} for now.
 
-RDEPEND=">=dev-python/turbojson-1.2.1
-	>=dev-python/turbocheetah-1.0
-	>=dev-python/turbokid-1.0.4
-	=dev-python/cherrypy-2.3*
-	>=dev-python/simplejson-1.3
-	>=dev-python/pastescript-0.9.7
-	>=dev-python/formencode-0.7.1
-	>=dev-python/ruledispatch-0.5_pre2306
-	>=dev-python/decoratortools-1.4
-	>=dev-python/configobj-4.3.2
-	|| ( =dev-lang/python-2.4*
-		( =dev-lang/python-2.5* >=dev-python/cheetah-2.0_rc7-r1 ) )
-	|| ( =dev-lang/python-2.5*
-		( =dev-lang/python-2.4* >=dev-python/celementtree-1.0.5 ) )
-	>=dev-python/sqlobject-0.7
-	test? ( >=dev-python/nose-0.9.1 >=dev-python/sqlalchemy-0.4
-		|| ( =dev-lang/python-2.5*
-			( =dev-lang/python-2.4* dev-python/pysqlite ) ) )
-	>=dev-python/genshi-0.5.1"
+RDEPEND=">=dev-python/pastescript-1.6.2
+	test? ( >=dev-python/nose-0.9.1
+		dev-python/coverage
+		>=dev-python/turbokid-1.0.4
+		>=dev-python/sqlalchemy-0.4
+		dev-python/jinja2
+		>=dev-python/chameleon.genshi-1.0_beta4
+		>=dev-python/repoze.what-1.0.5
+		>=dev-python/repoze.who-testutil-1.0_rc1
+	)
+	>=dev-python/pylons-0.9.7
+	>=dev-python/genshi-0.5.1
+	>=dev-python/webflash-0.1_alpha9
+	>=dev-python/toscawidgets-0.9.4
+	>=dev-python/weberror-0.10.1
+	>=dev-python/repoze-what-pylons-1.0_rc3
+	>=dev-python/repoze.tm2-1.0_alpha4
+	>=dev-python/turbojson-1.2.1"
+
 DEPEND="${RDEPEND}
 	app-arch/zip
 	>=dev-python/setuptools-0.6_rc5"
@@ -62,8 +62,5 @@ src_test() {
 pkg_postinst() {
 	elog "While not directly depending on them, TurboGears works with/integrates"
 	elog "the following packages:"
-	elog " - dev-python/elixir"
 	elog " - dev-python/sqlalchemy (already installed when built with tests enabled)"
-	elog " - dev-python/tg-widgets-lightbox"
-	elog " - dev-python/tg-widgets-scriptaculous"
 }
