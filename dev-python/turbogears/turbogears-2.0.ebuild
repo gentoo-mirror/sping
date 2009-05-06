@@ -41,7 +41,7 @@ RDEPEND=">=dev-python/pastescript-1.6.2
 	>=dev-python/webflash-0.1_alpha9
 	>=dev-python/toscawidgets-0.9.4
 	>=dev-python/weberror-0.10.1
-	>=dev-python/repoze-what-pylons-1.0_rc3
+	>=dev-python/repoze.what-pylons-1.0_rc3
 	>=dev-python/repoze.tm2-1.0_alpha4
 	>=dev-python/turbojson-1.2.1"
 
