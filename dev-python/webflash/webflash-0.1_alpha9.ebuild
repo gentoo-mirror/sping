@@ -17,4 +17,6 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
+RDEPEND="dev-python/simplejson"
+
 S="${WORKDIR}/${MY_P}"
