@@ -1,3 +1,4 @@
+
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-python/turbogears/turbogears-1.0.8.ebuild,v 1.2 2009/04/01 11:49:33 patrick Exp $
@@ -25,7 +26,7 @@ IUSE="test"
 
 # this package is not yet py2.6 ready. Keep deps at =py-2.{4,5} for now.
 
-RDEPEND=">=dev-python/turbojson-1.1.4
+RDEPEND=">=dev-python/turbojson-1.2.1
 	>=dev-python/turbocheetah-1.0
 	>=dev-python/turbokid-1.0.4
 	=dev-python/cherrypy-2.3*
@@ -40,10 +41,10 @@ RDEPEND=">=dev-python/turbojson-1.1.4
 	|| ( =dev-lang/python-2.5*
 		( =dev-lang/python-2.4* >=dev-python/celementtree-1.0.5 ) )
 	>=dev-python/sqlobject-0.7
-	test? ( >=dev-python/nose-0.9.1 >=dev-python/sqlalchemy-0.3.3
+	test? ( >=dev-python/nose-0.9.1 >=dev-python/sqlalchemy-0.4
 		|| ( =dev-lang/python-2.5*
 			( =dev-lang/python-2.4* dev-python/pysqlite ) ) )
-	>=dev-python/genshi-0.3.6"
+	>=dev-python/genshi-0.5.1"
 DEPEND="${RDEPEND}
 	app-arch/zip
 	>=dev-python/setuptools-0.6_rc5"
