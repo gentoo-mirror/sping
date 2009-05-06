@@ -13,3 +13,4 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
+RDEPEND=">=dev-python/peak-rules-0.5_alpha1_pre2562"
