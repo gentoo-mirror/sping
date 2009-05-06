@@ -12,3 +12,7 @@ LICENSE="Repoze"
 KEYWORDS=""
 SLOT="0"
 IUSE=""
+
+RDEPEND="net-zope/zopeinterface
+		dev-python/pastescript"
+DEPEND="dev-python/setuptools"
