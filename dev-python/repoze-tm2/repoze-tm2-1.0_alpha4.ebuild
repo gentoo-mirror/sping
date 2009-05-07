@@ -5,12 +5,13 @@
 
 inherit distutils
 
+MY_PN="${PN/-/.}"
 MY_PV="${PV/_alpha/a}"
-MY_P="${PN}-${MY_PV}"
+MY_P="${MY_PN}-${MY_PV}"
 
 DESCRIPTION="Zope-like transaction manager via WSGI middleware"
 HOMEPAGE="http://www.repoze.org"
-SRC_URI="http://pypi.python.org/packages/source/r/${PN}/${MY_P}.tar.gz"
+SRC_URI="http://pypi.python.org/packages/source/r/${MY_PN}/${MY_P}.tar.gz"
 LICENSE="Repoze"
 KEYWORDS=""
 SLOT="0"

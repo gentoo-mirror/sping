@@ -32,17 +32,17 @@ RDEPEND=">=dev-python/pastescript-1.6.2
 		>=dev-python/turbokid-1.0.4
 		>=dev-python/sqlalchemy-0.4
 		dev-python/jinja2
-		>=dev-python/chameleon.genshi-1.0_beta4
-		>=dev-python/repoze.what-1.0.5
-		>=dev-python/repoze.who-testutil-1.0_rc1
+		>=dev-python/chameleon-genshi-1.0_beta4
+		>=dev-python/repoze-what-1.0.5
+		>=dev-python/repoze-who-testutil-1.0_rc1
 	)
 	>=dev-python/pylons-0.9.7
 	>=dev-python/genshi-0.5.1
 	>=dev-python/webflash-0.1_alpha9
 	>=dev-python/toscawidgets-0.9.4
 	>=dev-python/weberror-0.10.1
-	>=dev-python/repoze.what-pylons-1.0_rc3
-	>=dev-python/repoze.tm2-1.0_alpha4
+	>=dev-python/repoze-what-pylons-1.0_rc3
+	>=dev-python/repoze-tm2-1.0_alpha4
 	>=dev-python/turbojson-1.2.1"
 
 DEPEND="${RDEPEND}

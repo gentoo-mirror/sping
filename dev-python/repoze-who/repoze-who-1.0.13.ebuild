@@ -5,9 +5,12 @@
 
 inherit distutils
 
+MY_PN="${PN/-/.}"
+MY_P="${MY_PN}-${PV}"
+
 DESCRIPTION="repoze.who is an identification and authentication framework for WSGI."
 HOMEPAGE="http://www.repoze.org"
-SRC_URI="http://pypi.python.org/packages/source/r/repoze.who/${P}.tar.gz"
+SRC_URI="http://pypi.python.org/packages/source/r/${MY_PN}/${MY_P}.tar.gz"
 LICENSE="Repoze"
 KEYWORDS=""
 SLOT="0"
@@ -16,3 +19,5 @@ IUSE=""
 RDEPEND="net-zope/zopeinterface
 		dev-python/pastescript"
 DEPEND="dev-python/setuptools"
+
+S="${WORKDIR}/${MY_P}"

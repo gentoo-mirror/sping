@@ -5,12 +5,13 @@
 
 inherit distutils
 
+MY_PN="${PN/-/.}"
 MY_PV="${PV/_beta/b}"
-MY_P="${PN}-${MY_PV}"
+MY_P="${MY_PN}-${MY_PV}"
 
 DESCRIPTION="Genshi template engine based on Chameleon"
 HOMEPAGE="UNKNOWN"
-SRC_URI="http://pypi.python.org/packages/source/c/${PN}/${MY_P}.tar.gz"
+SRC_URI="http://pypi.python.org/packages/source/c/${MY_PN}/${MY_P}.tar.gz"
 LICENSE="BSD"
 KEYWORDS=""
 SLOT="0"

@@ -5,20 +5,21 @@
 
 inherit distutils
 
+MY_PN="${PN/-/.}"
 MY_PV="${PV/_rc/rc}"
-MY_P="${PN}-${MY_PV}"
+MY_P="${MY_PN}-${MY_PV}"
 
 DESCRIPTION="Test utilities for repoze.who-powered applications"
 HOMEPAGE="http://code.gustavonarea.net/repoze.who-testutil/"
-SRC_URI="http://pypi.python.org/packages/source/r/${PN}/${MY_P}.tar.gz"
+SRC_URI="http://pypi.python.org/packages/source/r/${MY_PN}/${MY_P}.tar.gz"
 LICENSE="Repoze"
 KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-S="${WORKDIR}/${MY_P}"
-
-RDEPEND=">=dev-python/repoze.who-1.0
+RDEPEND=">=dev-python/repoze-who-1.0
 		net-zope/zopeinterface
 		>=dev-python/pastescript-1.7
 		>=dev-python/pastedeploy-1.3.3"
+
+S="${WORKDIR}/${MY_P}"
