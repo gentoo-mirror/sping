@@ -19,7 +19,7 @@ IUSE=""
 RDEPEND="net-zope/zopeinterface
 	net-zope/zopecomponent
 	>=dev-python/zope.i18n-3.5
-	>=dev-python/chameleon.core-1.0_beta21"
+	>=dev-python/chameleon-core-1.0_beta21"
 DEPEND="dev-python/setuptools"
 
 
