@@ -12,3 +12,15 @@ LICENSE="GPL-2"
 KEYWORDS=""
 SLOT="0"
 IUSE=""
+
+RDEPEND="dev-python/pygments
+	dev-python/setuptools
+	dev-python/cheetah
+	dev-python/configobj"
+
+src_install() {
+	distutils_src_install
+
+	insinto /usr/lib/python2.5/site-packages/g_pypi/
+	doins g_pypi/ebuild.tmpl || die "doins failed"
+}
