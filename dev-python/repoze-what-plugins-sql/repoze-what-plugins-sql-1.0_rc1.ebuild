@@ -21,3 +21,9 @@ DEPEND=">=dev-python/repoze-what-1.0.3
 	>=dev-python/sqlalchemy-0.5"
 
 S="${WORKDIR}/${MY_P}"
+
+src_install() {
+	distutils_src_install
+
+	rm -Rf "${D}"/usr/lib/python*/site-packages/tests || die "rm failed"
+}
