@@ -22,7 +22,7 @@ IUSE="test"
 RDEPEND="dev-python/ruledispatch
 	dev-python/simplejson"
 DEPEND="${RDEPEND}
-	dev-python/setuptools
+	>=dev-python/setuptools-0.6_rc9
 	test? ( dev-python/nose )"
 
 S=${WORKDIR}/${MY_P}
