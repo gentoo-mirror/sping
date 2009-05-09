@@ -11,7 +11,7 @@ IUSE=""
 
 QUICKSTART_APP_DEPEND=">=dev-python/turbogears-2.0_beta7
 	>=dev-python/catwalk-2.0.2
-	>=dev-python/babel-0.9.4
+	>=dev-python/Babel-0.9.4
 	>=net-zope/zopesqlalchemy-0.4
 	>=dev-python/repoze-tm2-1.0_alpha4"
 
