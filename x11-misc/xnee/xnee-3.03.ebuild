@@ -31,6 +31,10 @@ DEPEND="${RDEPEND}
 		app-text/texlive-core
 	)"
 
+src_prepare() {
+	epatch "${FILESDIR}"/${PN}-3.03-fix-doc-compile.patch
+}
+
 src_configure() {
 	local myconf
 
