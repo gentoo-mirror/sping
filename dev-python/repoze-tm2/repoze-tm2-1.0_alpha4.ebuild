@@ -18,6 +18,6 @@ SLOT="0"
 IUSE=""
 
 RDEPEND="dev-python/transaction"
-DEPEND="
+DEPEND=""
 
 S="${WORKDIR}/${MY_P}"
