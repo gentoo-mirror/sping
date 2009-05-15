@@ -25,5 +25,5 @@ S="${WORKDIR}/${MY_P}"
 src_install() {
 	distutils_src_install
 
-	rm -Rf "${D}"/usr/lib/python*/site-packages/tests || die "rm failed"
+	rm -Rf "${D}/$(python_get_sitedir)"/tests || die "rm failed"
 }
