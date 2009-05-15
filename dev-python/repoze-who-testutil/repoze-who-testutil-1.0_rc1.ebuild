@@ -18,8 +18,9 @@ SLOT="0"
 IUSE=""
 
 RDEPEND=">=dev-python/repoze-who-1.0
-		net-zope/zopeinterface
-		>=dev-python/pastescript-1.7
-		>=dev-python/pastedeploy-1.3.3"
+	net-zope/zopeinterface
+	>=dev-python/pastescript-1.7
+	>=dev-python/pastedeploy-1.3.3"
+DEPEND=""
 
 S="${WORKDIR}/${MY_P}"

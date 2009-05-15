@@ -16,6 +16,7 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
+RDEPEND=""
 DEPEND="app-arch/unzip"
 
 S="${WORKDIR}/${MY_P}"

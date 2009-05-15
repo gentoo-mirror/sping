@@ -17,5 +17,6 @@ SLOT="0"
 IUSE=""
 
 RDEPEND="net-zope/zopeinterface"
+DEPEND=""
 
 S="${WORKDIR}/${MY_P}"

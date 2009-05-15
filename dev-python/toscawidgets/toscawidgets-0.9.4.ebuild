@@ -16,7 +16,8 @@ KEYWORDS="~amd64"
 SLOT="0"
 IUSE=""
 S="${WORKDIR}/${MY_P}"
-DEPEND="dev-python/setuptools"
+
 RDEPEND="dev-python/webob
 	>=dev-python/simplejson-2.0"
+DEPEND="dev-python/setuptools"
 

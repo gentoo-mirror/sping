@@ -21,5 +21,6 @@ RDEPEND=">=dev-python/bytecodeassembler-0.4
 	>=dev-python/decoratortools-1.7
 	>=dev-python/addons-0.6
 	>=dev-python/extremes-1.1"
+DEPEND=""
 
 S="${WORKDIR}/${MY_P}"

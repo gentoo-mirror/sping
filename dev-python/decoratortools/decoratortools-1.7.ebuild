@@ -16,9 +16,9 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
+RDEPEND=""
 DEPEND="app-arch/unzip
 	>=dev-python/setuptools-0.6_rc6"
-RDEPEND=""
 
 S="${WORKDIR}/${MY_P}"
 

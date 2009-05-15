@@ -15,10 +15,11 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-DEPEND=">=dev-python/turbogears-2.0_beta7
+RDEPEND=">=dev-python/turbogears-2.0_beta7
 	>=dev-python/sqlalchemy-migrate-0.5.1
 	>=dev-python/sqlalchemy-0.5
 	>=dev-python/repoze-what-quickstart-1.0
 	>=dev-python/repoze-who-1.0.10"
+DEPEND=""
 
 S="${WORKDIR}/${MY_P}"

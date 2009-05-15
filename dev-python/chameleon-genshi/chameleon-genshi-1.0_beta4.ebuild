@@ -23,5 +23,4 @@ RDEPEND="net-zope/zopeinterface
 	>=dev-python/chameleon-core-1.0_beta21"
 DEPEND="dev-python/setuptools"
 
-
 S="${WORKDIR}/${MY_P}"

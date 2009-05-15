@@ -16,7 +16,7 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-RDEPEND="dev-python/setuptools
-	>=dev-python/tg-ext-crud-0.2.1"
+RDEPEND=">=dev-python/tg-ext-crud-0.2.1"
+DEPEND="dev-python/setuptools"
 
 S="${WORKDIR}/${MY_P}"

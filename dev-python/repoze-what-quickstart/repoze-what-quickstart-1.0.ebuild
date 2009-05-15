@@ -16,10 +16,11 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-DEPEND=">=dev-python/repoze-what-1.0.3
+RDEPEND=">=dev-python/repoze-what-1.0.3
 	dev-python/repoze-who
 	>=dev-python/repoze-who-plugins-sa-1.0_rc1
 	>=dev-python/repoze-what-plugins-sql-1.0_rc1
 	dev-python/repoze-who-friendlyform"
+DEPEND=""
 
 S="${WORKDIR}/${MY_P}"

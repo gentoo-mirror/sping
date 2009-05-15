@@ -17,6 +17,7 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-RDEPENDS="dev-python/transaction"
+RDEPEND="dev-python/transaction"
+DEPEND="
 
 S="${WORKDIR}/${MY_P}"

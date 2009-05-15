@@ -17,8 +17,9 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-DEPEND="dev-python/repoze-who
+RDEPEND="dev-python/repoze-who
 	>=dev-python/sqlalchemy-0.5.0_rc4"
+DEPEND=""
 
 S="${WORKDIR}/${MY_P}"
 

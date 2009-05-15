@@ -13,6 +13,6 @@ KEYWORDS=""
 SLOT="0"
 IUSE="doc test"
 
-DEPENDS=">=dev-python/sqlalchemy-0.5
-	doc? ( >=dev-python/sphinx-0.5 )
+RDEPEND=">=dev-python/sqlalchemy-0.5"
+DEPEND="doc? ( >=dev-python/sphinx-0.5 )
 	test? ( >=dev-python/nose-0.10 )"

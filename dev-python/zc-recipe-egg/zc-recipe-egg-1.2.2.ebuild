@@ -16,8 +16,8 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="dev-python/setuptools"
 RDEPEND="net-zope/zcbuildout"
+DEPEND="dev-python/setuptools"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 

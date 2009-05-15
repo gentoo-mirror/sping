@@ -16,7 +16,8 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-DEPEND=">=dev-python/sprox-0.5.4.1
+RDEPEND=">=dev-python/sprox-0.5.4.1
 	>=dev-python/tw-forms-0.9"
+DEPEND=""
 
 S="${WORKDIR}/${MY_P}"

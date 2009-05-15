@@ -15,8 +15,8 @@ LICENSE="ZPL"
 KEYWORDS=""
 SLOT="0"
 IUSE=""
+
+RDEPEND=">=dev-python/decoratortools-1.5"
 DEPEND="app-arch/unzip"
 
 S="${WORKDIR}/${MY_P}"
-
-RDEPEND=">=dev-python/decoratortools-1.5"

@@ -18,5 +18,6 @@ IUSE=""
 
 RDEPEND="dev-python/sprox
 	dev-python/tg-ext-admin"
+DEPEND=""
 
 S="${WORKDIR}/${MY_P}"

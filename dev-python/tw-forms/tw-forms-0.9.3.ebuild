@@ -16,9 +16,10 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-DEPENDS=">=dev-python/toscawidgets-0.9.3
+RDEPEND=">=dev-python/toscawidgets-0.9.3
 	>=dev-python/formencode-1.1
 	dev-python/mako
 	>=dev-python/genshi-0.3.6"
+DEPEND=""
 
 S="${WORKDIR}/${MY_P}"

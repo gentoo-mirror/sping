@@ -18,3 +18,5 @@ QUICKSTART_APP_DEPEND=">=dev-python/turbogears-2.0_beta7
 RDEPEND=">=dev-python/turbogears-2
 	>=dev-python/tg-devtools-2
 	${QUICKSTART_APP_DEPEND}"
+
+DEPEND=""

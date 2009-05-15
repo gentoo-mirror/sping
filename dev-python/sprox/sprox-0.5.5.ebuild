@@ -13,9 +13,10 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-DEPEND=">=dev-python/sqlalchemy-0.5_rc1
+RDEPEND=">=dev-python/sqlalchemy-0.5_rc1
 	>=dev-python/tw-forms-0.9.2
 	>=dev-python/genshi-0.5"
+DEPEND=""
 
 src_install() {
 	distutils_src_install

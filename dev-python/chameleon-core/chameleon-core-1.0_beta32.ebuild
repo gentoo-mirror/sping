@@ -17,9 +17,9 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-RDEPEND="dev-python/setuptools
-	net-zope/zopeinterface
+RDEPEND="net-zope/zopeinterface
 	>=net-zope/zopei18n-3.5
 	>=dev-python/sourcecodegen-0.6.7"
+DEPEND="dev-python/setuptools"
 
 S="${WORKDIR}/${MY_P}"

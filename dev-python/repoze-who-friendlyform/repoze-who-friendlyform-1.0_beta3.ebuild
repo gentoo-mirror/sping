@@ -17,7 +17,8 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-DEPEND=">=dev-python/repoze-who-1.0
+RDEPEND=">=dev-python/repoze-who-1.0
 	net-zope/zopeinterface"
+DEPEND=""
 
 S="${WORKDIR}/${MY_P}"
