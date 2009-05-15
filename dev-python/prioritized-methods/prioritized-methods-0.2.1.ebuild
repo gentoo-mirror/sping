@@ -5,9 +5,12 @@
 
 inherit distutils
 
+MY_PN=${PN/-/_}
+MY_P="${MY_PN}-${PV}"
+
 DESCRIPTION="An extension to PEAK-Rules to prioritize methods in order to to avoid AmbiguousMethods situations"
 HOMEPAGE="UNKNOWN"
-SRC_URI="http://pypi.python.org/packages/source/p/prioritized_methods/${P}.tar.gz"
+SRC_URI="http://pypi.python.org/packages/source/p/${MY_PN}/${MY_P}.tar.gz"
 LICENSE="MIT"
 KEYWORDS=""
 SLOT="0"
@@ -15,3 +18,5 @@ IUSE=""
 
 RDEPEND=">=dev-python/peak-rules-0.5_alpha1_pre2562"
 DEPEND=""
+
+S="${WORKDIR}/${MY_P}"

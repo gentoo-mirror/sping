@@ -21,7 +21,7 @@ IUSE="test"
 
 RDEPEND="dev-python/ruledispatch
 	dev-python/simplejson
-	>=dev-python/prioritized_methods-0.2"
+	>=dev-python/prioritized-methods-0.2"
 DEPEND="${RDEPEND}
 	>=dev-python/setuptools-0.6_rc9
 	test? ( dev-python/nose )"
