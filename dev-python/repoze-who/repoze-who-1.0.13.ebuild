@@ -17,7 +17,7 @@ SLOT="0"
 IUSE=""
 
 RDEPEND="net-zope/zopeinterface
-	dev-python/pastescript"
+	dev-python/paste"
 DEPEND="dev-python/setuptools"
 
 S="${WORKDIR}/${MY_P}"

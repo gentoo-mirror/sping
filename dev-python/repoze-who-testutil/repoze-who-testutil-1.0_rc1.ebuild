@@ -19,7 +19,7 @@ IUSE=""
 
 RDEPEND=">=dev-python/repoze-who-1.0
 	net-zope/zopeinterface
-	>=dev-python/pastescript-1.7
+	>=dev-python/paste-1.7
 	>=dev-python/pastedeploy-1.3.3"
 DEPEND=""
 

@@ -18,7 +18,7 @@ IUSE=""
 
 RDEPEND=">=dev-python/repoze-who-1.0
 	>=dev-python/repoze-who-testutil-1.0_beta2
-	>=dev-python/pastescript-1.7"
+	>=dev-python/paste-1.7"
 DEPEND=""
 
 S="${WORKDIR}/${MY_P}"
