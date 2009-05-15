@@ -16,13 +16,13 @@ KEYWORDS=""
 SLOT="0"
 IUSE="test"
 
-RDEPEND="dev-python/setuptools
-	|| (
+RDEPEND="|| (
 		( >=dev-python/sqlalchemy-0.4.7 <=dev-python/sqlalchemy-0.5 )
 		>=dev-python/sqlalchemy-0.5.1
 	)
 	dev-python/transaction
-	net-zope/zopeinterface
+	net-zope/zopeinterface"
+DEPEND="dev-python/setuptools
 	test? ( net-zope/zopetesting dev-python/docutils )"
 
 S="${WORKDIR}/${MY_P}"

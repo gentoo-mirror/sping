@@ -16,11 +16,11 @@ KEYWORDS=""
 SLOT="0"
 IUSE="doc test"
 
-RDEPEND="dev-python/setuptools
-		net-zope/zopei18nmessageid
-		net-zope/zopeinterface
-		net-zope/zopeevent
-		test? ( net-zope/zopetesting )
-		doc? ( net-zope/z3c-recipe-sphinxdoc )"
+RDEPEND="net-zope/zopei18nmessageid
+	net-zope/zopeinterface
+	net-zope/zopeevent"
+DEPEND="dev-python/setuptools
+	test? ( net-zope/zopetesting )
+	doc? ( net-zope/z3c-recipe-sphinxdoc )"
 
 S="${WORKDIR}/${MY_P}"

@@ -16,6 +16,7 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-RDEPEND="dev-python/setuptools"
+RDEPEND=""
+DEPEND="dev-python/setuptools"
 
 S="${WORKDIR}/${MY_P}"

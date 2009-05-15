@@ -16,10 +16,10 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-RDEPEND="dev-python/setuptools
-	net-zope/zcbuildout
+RDEPEND="net-zope/zcbuildout
 	dev-python/zc-recipe-egg
-	dev-python/docutils
 	dev-python/sphinx"
+DEPEND="dev-python/setuptools
+	dev-python/docutils"
 
 S="${WORKDIR}/${MY_P}"

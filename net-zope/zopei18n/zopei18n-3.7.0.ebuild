@@ -16,12 +16,12 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-RDEPEND="dev-python/setuptools
-	dev-python/pytz
+RDEPEND="dev-python/pytz
 	net-zope/zopeschema
 	net-zope/zopei18nmessageid
 	net-zope/zopecomponent
 	net-zope/zopeconfiguration
 	dev-python/python-gettext"
+DEPEND="dev-python/setuptools"
 
 S="${WORKDIR}/${MY_P}"

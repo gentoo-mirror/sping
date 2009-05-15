@@ -17,9 +17,9 @@ SLOT="0"
 IUSE=""
 
 RDEPEND="net-zope/zopei18nmessageid
-		net-zope/zopeinterface
-		net-zope/zopeschema
-		dev-python/setuptools
-		test? ( net-zope/zopetesting )"
+	net-zope/zopeinterface
+	net-zope/zopeschema"
+DEPEND="dev-python/setuptools
+	test? ( net-zope/zopetesting )"
 
 S="${WORKDIR}/${MY_P}"
