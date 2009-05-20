@@ -39,7 +39,7 @@ RDEPEND=">=dev-python/pastescript-1.6.2
 	test? ( >=dev-python/nose-0.9.1
 		dev-python/coverage
 		>=dev-python/turbokid-1.0.4
-		>=dev-python/sqlalchemy-0.4
+		>=dev-python/sqlalchemy-0.5
 		dev-python/jinja2
 		>=dev-python/chameleon-genshi-1.0_beta4
 		>=dev-python/repoze-what-1.0.5
