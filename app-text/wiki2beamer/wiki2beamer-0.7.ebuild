@@ -12,16 +12,13 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
 
-S="${WORKDIR}/${PN}"
+S="${WORKDIR}"
 
-DEPEND=">=dev-lang/python-2.4"
-RDEPEND="${DEPEND}"
+DEPEND=""
+RDEPEND=">=dev-lang/python-2.4"
 
 src_install() {
-	cd code/
-	dodoc ChangeLog README || die "dodoc failed"
-	dobin wiki2beamer || die "dobin failed"
-
-	cd ../doc/man
-	doman wiki2beamer.1 || die "doman failed"
+	doman doc/man/wiki2beamer.1 || die "doman failed"
+	dodoc code/{ChangeLog,README} || die "dodoc failed"
+	dobin code/wiki2beamer || die "dobin failed"
 }
