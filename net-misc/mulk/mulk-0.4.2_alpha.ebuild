@@ -9,28 +9,30 @@ inherit base
 MY_PV=${PV/_alpha/}
 MY_P="${PN}-${MY_PV}"
 
+DESCRIPTION="Download agent similar to wget/curl"
+
+HOMEPAGE="http://mulk.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
+
+LICENSE="GPL-3"
+SLOT="0"
+KEYWORDS="~x86"
+IUSE="debug metalink checksum"
 
 DEPEND="net-misc/curl
 	app-text/htmltidy
-	dev-libs/uriparser"
-#	metalink? (
-#		libmetalink
-#		checksum? ( dev-libs/openssl )
-#	)
+	dev-libs/uriparser
+	metalink? (
+		media-libs/libmetalink
+		checksum? ( dev-libs/openssl )
+	)"
 RDEPEND="${DEPEND}"
-
-IUSE="debug" # metalink checksum
-SLOT="0"
-
-KEYWORDS="~x86"
 
 S="${WORKDIR}/${MY_P}"
 
 src_configure() {
 	econf \
 		$(use_enable debug) \
-		--disable-metalink
-#		$(use_enable metalink)
-#		$(use_enable checksum)
+		$(use_enable metalink) \
+		$(use metalink && use checksum && echo --enable-checksum)
 }
