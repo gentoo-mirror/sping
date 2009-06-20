@@ -21,6 +21,5 @@ DEPEND=""
 
 src_install() {
     base_src_install
-    rm -Rf "${D}"/usr/share
     dodoc README || die "dodoc failed"
 }
