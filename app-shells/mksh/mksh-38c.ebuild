@@ -6,7 +6,7 @@ inherit eutils
 
 DESCRIPTION="MirBSD KSH Shell"
 HOMEPAGE="http://mirbsd.de/mksh"
-ARC4_VERSION="1.12"
+ARC4_VERSION="1.14"
 SRC_URI="http://www.mirbsd.org/MirOS/dist/mir/mksh/${PN}-R${PV}.cpio.gz
 	http://www.mirbsd.org/MirOS/dist/hosted/other/arc4random.c.${ARC4_VERSION}"
 LICENSE="BSD"
