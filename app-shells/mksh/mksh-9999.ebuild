@@ -16,7 +16,7 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS=""
 IUSE=""
-DEPEND="app-arch/cpio"
+DEPEND=""
 RDEPEND=""
 S="${WORKDIR}/${ECVS_MODULE}"
 
