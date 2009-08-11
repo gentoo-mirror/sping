@@ -26,11 +26,6 @@ RDEPEND="${DEPEND}
 
 S="${S}/client"
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-}
-
 src_install() {
 	emake install DESTDIR="${D}" || die "Install failed"
 
