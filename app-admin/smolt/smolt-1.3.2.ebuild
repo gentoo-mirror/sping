@@ -42,7 +42,7 @@ src_install() {
 	use qt4 && doman man/smoltGui.1
 
 	dodoc ../README ../TODO ../doc/PrivacyPolicy
-	newinitd "${FILESDIR}"/${PN}-init.d ${PN}
+	newinitd "${FILESDIR}"/${PN}-init.d ${PN} || die "newinitd failed"
 }
 
 pkg_postinst() {
