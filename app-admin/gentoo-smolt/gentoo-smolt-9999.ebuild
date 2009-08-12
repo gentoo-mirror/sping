@@ -21,6 +21,7 @@ DEPEND="virtual/python
 	qt4? ( dev-python/PyQt4 )"
 
 RDEPEND="${DEPEND}
+	!app-admin/smolt
 	sys-apps/hal
 	>=dev-python/rhpl-0.213
 	>=dev-python/urlgrabber-3.0.0
@@ -45,6 +46,14 @@ src_install() {
 
 	dodoc ../README ../TODO ../doc/PrivacyPolicy
 	newinitd "${FILESDIR}"/smolt-init.d ${PN} || die "newinitd failed"
+
+	# gentoo-smolt only
+	dodir "$(python_get_sitedir)"/smolt || die 'dodir failed'
+	mv "${D}"{/usr/share,$(python_get_sitedir)}/smolt/client || die 'mv failed'
+	insinto "$(python_get_sitedir)"/smolt/client
+	doins -r distros || die 'doins failed'
+	rm "${D}"/usr/bin/smoltSendProfile || die 'rm failed'
+	dobin smoltSendProfile || die 'dobin failed'
 }
 
 pkg_postinst() {
