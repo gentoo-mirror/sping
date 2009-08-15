@@ -14,7 +14,8 @@ IUSE=""
 
 RDEPEND="virtual/python
     || ( =app-text/manserver-1.07
-        =app-text/manserver-1.08 )"
+        =app-text/manserver-1.08 )
+    dev-python/utidylib"
 DEPEND=""
 
 S="${WORKDIR}/${PN}"
