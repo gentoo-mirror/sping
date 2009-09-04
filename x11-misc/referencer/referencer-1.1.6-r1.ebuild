@@ -16,19 +16,20 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=">=virtual/poppler-0.5.0
+RDEPEND=">=virtual/poppler-0.5.0
 	>=dev-cpp/gtkmm-2.8
 	>=dev-cpp/libgnomeuimm-2.14.0
 	>=dev-cpp/gnome-vfsmm-2.14.0
 	>=dev-cpp/libglademm-2.6.0
 	>=dev-cpp/gconfmm-2.14.0
-	>=app-text/gnome-doc-utils-0.3.2
 	virtual/poppler-glib
 	dev-libs/boost
-	dev-util/pkgconfig
-	dev-util/intltool
 	dev-lang/python"
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}
+    >=app-text/gnome-doc-utils-0.3.2
+    dev-util/pkgconfig
+    dev-util/intltool
+    app-text/rarian"
 
 src_configure() {
 	econf --disable-update-mime-database --enable-python
