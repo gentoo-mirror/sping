@@ -14,7 +14,7 @@ SRC_URI="http://icculus.org/referencer/downloads/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="python"
+IUSE=""
 
 DEPEND=">=virtual/poppler-0.5.0
 	>=dev-cpp/gtkmm-2.8
@@ -22,13 +22,16 @@ DEPEND=">=virtual/poppler-0.5.0
 	>=dev-cpp/gnome-vfsmm-2.14.0
 	>=dev-cpp/libglademm-2.6.0
 	>=dev-cpp/gconfmm-2.14.0
+	>=app-text/gnome-doc-utils-0.3.2
 	virtual/poppler-glib
 	dev-libs/boost
-	python? ( dev-lang/python )"
+	dev-util/pkgconfig
+	dev-util/intltool
+	dev-lang/python"
 RDEPEND="${DEPEND}"
 
 src_configure() {
-	econf --disable-update-mime-database $(use_enable python)
+	econf --disable-update-mime-database --enable-python
 }
 
 src_install() {
