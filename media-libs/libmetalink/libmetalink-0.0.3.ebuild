@@ -7,8 +7,7 @@ EAPI="2"
 inherit base
 
 DESCRIPTION="Library for handling Metalink files"
-
-HOMEPAGE="https://launchpad.net/libmetalink"
+HOMEPAGE="http://launchpad.net/libmetalink"
 SRC_URI="http://code.launchpad.net/${PN}/trunk/${PV}/+download/${PN}-${PV}.tar.bz2"
 
 LICENSE="MIT"
@@ -17,9 +16,9 @@ KEYWORDS="~x86"
 IUSE="expat test"
 
 RDEPEND="expat? ( dev-libs/expat )
-	!expat? ( >=dev-libs/libxml2-2.6.24 )
+	!expat? ( >=dev-libs/libxml2-2.6.24 )"
+DEPEND="${RDEPEND}
 	test? ( dev-util/cunit )"
-DEPEND="${RDEPEND}"
 
 src_configure() {
 	local xml_args
