@@ -1,0 +1,9 @@
+# ChangeLog for media-sound/boombox
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*boombox-0.3.1 (06 Oct 2009)
+
+  06 Oct 2009; Sebastian Pipping <sping@gentoo.org> +boombox-0.3.1.ebuild:
+  Add 0.3.1 ebuild based on previous work by Nicolas Dietrich
+
