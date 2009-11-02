@@ -1,0 +1,33 @@
+From 5e1e4971227538074a28dc16987f27a76f9125cf Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Mon, 2 Nov 2009 02:23:04 +0100
+Subject: [PATCH] Add destdir support
+
+---
+ Makefile.in |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 99d1509..87d06b3 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -43,11 +43,11 @@ selfconf:
+ 	$(MAKE) -C selfconf
+ 
+ install: src 
+-	@INSTALL@ -dv -m 0755 @prefix@
+-	@INSTALL@ -dv -m 0755 @prefix@/plugins
+-	@INSTALL@ -bcv -m 0755 src/harpoon @prefix@
+-	@INSTALL@ -bcv -m 0755 src/run_harpoon.sh @prefix@
+-	@INSTALL@ -bcv -m 0755 src/plugins/*.@SHLIB_EXT@ @prefix@/plugins
++	@INSTALL@ -dv -m 0755 $(DESTDIR)@prefix@
++	@INSTALL@ -dv -m 0755 $(DESTDIR)@prefix@/plugins
++	@INSTALL@ -bcv -m 0755 src/harpoon $(DESTDIR)@prefix@
++	@INSTALL@ -bcv -m 0755 src/run_harpoon.sh $(DESTDIR)@prefix@
++	@INSTALL@ -bcv -m 0755 src/plugins/*.@SHLIB_EXT@ $(DESTDIR)@prefix@/plugins
+ 
+ clean:
+ 	$(MAKE) -C src clean 
+-- 
+1.6.5.2
+
