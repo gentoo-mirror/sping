@@ -21,7 +21,7 @@ S="${WORKDIR}/${MY_P}"
 
 RDEPEND="dev-python/fuse-python
 	>=dev-python/sclapp-0.5.2
-	dev-libs/libgamin[python]
+	|| ( dev-python/inotifyx dev-libs/libgamin[python] )
 	media-libs/mutagen"
 DEPEND="${RDEPEND}
 	dev-libs/libxslt
