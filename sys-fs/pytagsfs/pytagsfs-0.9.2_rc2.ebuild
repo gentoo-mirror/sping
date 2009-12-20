@@ -24,7 +24,8 @@ RDEPEND="dev-python/fuse-python
 	|| ( dev-python/inotifyx
 		( dev-libs/libgamin[python]
 			app-admin/gam-server ) )
-	media-libs/mutagen"
+	media-libs/mutagen
+	dev-python/ctypes"
 DEPEND="${RDEPEND}
 	dev-libs/libxslt
 	app-text/docbook-xsl-stylesheets
@@ -33,8 +34,7 @@ DEPEND="${RDEPEND}
 		app-admin/gam-server
 		media-sound/madplay
 		media-sound/vorbis-tools
-		media-libs/flac
-		dev-python/ctypes )"
+		media-libs/flac )"
 
 src_test() {
 	echo "$(PYTHON "${PYVER}")" setup.py test
