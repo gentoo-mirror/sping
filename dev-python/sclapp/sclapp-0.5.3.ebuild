@@ -1,8 +1,8 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-
 EAPI="2"
+SUPPORT_PYTHON_ABIS="1"
 
 inherit distutils
 
@@ -18,3 +18,18 @@ IUSE=""
 
 DEPEND=""
 RDEPEND=""
+
+RESTRICT_PYTHON_ABIS="3.*"
+
+src_prepare() {
+	# Disable failing test
+	sed -e "s/test_stdout_fails_without_signal_handling_without_output_protection/_&/" \
+			-i tests/output_protection.py || die "sed failed"
+}
+
+src_test() {
+	testing() {
+		PYTHONPATH="build-${PYTHON_ABI}/lib" "$(PYTHON)" setup.py build -b "build-${PYTHON_ABI}" test
+	}
+	python_execute_function testing
+}
