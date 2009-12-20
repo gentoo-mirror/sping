@@ -1,13 +1,13 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
 EAPI="2"
 SUPPORT_PYTHON_ABIS="1"
 
 inherit distutils
 
 DESCRIPTION="Framework for writing simple command-line applications"
-
 HOMEPAGE="http://www.alittletooquiet.net/software/sclapp/"
 SRC_URI="http://www.alittletooquiet.net/media/release/${P}.tar.gz"
 
@@ -18,7 +18,6 @@ IUSE=""
 
 DEPEND=""
 RDEPEND=""
-
 RESTRICT_PYTHON_ABIS="3.*"
 
 src_prepare() {
