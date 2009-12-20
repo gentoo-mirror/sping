@@ -21,12 +21,17 @@ S="${WORKDIR}/${MY_P}"
 
 RDEPEND="dev-python/fuse-python
 	>=dev-python/sclapp-0.5.2
-	|| ( dev-python/inotifyx dev-libs/libgamin[python] )
+	|| ( dev-python/inotifyx
+		( dev-libs/libgamin[python]
+			app-admin/gam-server ) )
 	media-libs/mutagen"
 DEPEND="${RDEPEND}
 	dev-libs/libxslt
 	app-text/docbook-xsl-stylesheets
-	test? ( media-sound/madplay
+	test? ( dev-python/inotifyx
+		dev-libs/libgamin[python]
+		app-admin/gam-server
+		media-sound/madplay
 		media-sound/vorbis-tools
 		media-libs/flac
 		dev-python/ctypes )"
