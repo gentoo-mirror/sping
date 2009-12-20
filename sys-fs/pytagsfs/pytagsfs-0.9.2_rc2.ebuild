@@ -1,8 +1,10 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-
 EAPI="2"
+NEED_PYTHON="2.5"
+SUPPORT_PYTHON_ABIS="1"
+DISTUTILS_USE_SEPARATE_SOURCE_DIRECTORIES="1"
 
 inherit distutils
 
@@ -24,8 +26,7 @@ RDEPEND="dev-python/fuse-python
 	|| ( dev-python/inotifyx
 		( dev-libs/libgamin[python]
 			app-admin/gam-server ) )
-	media-libs/mutagen
-	dev-python/ctypes"
+	media-libs/mutagen"
 DEPEND="${RDEPEND}
 	dev-libs/libxslt
 	app-text/docbook-xsl-stylesheets
@@ -36,7 +37,11 @@ DEPEND="${RDEPEND}
 		media-sound/vorbis-tools
 		media-libs/flac )"
 
+RESTRICT_PYTHON_ABIS="2.4 3.*"
+
 src_test() {
-	echo "$(PYTHON "${PYVER}")" setup.py test
-	"$(PYTHON "${PYVER}")" setup.py test
+	testing() {
+		PYTHONPATH="build/lib" "$(PYTHON)" setup.py test
+	}
+	python_execute_function testing
 }
