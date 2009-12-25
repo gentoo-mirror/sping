@@ -1,0 +1,468 @@
+From 0c243de149c759c5eb76898c57030c5351b76afa Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Sat, 26 Dec 2009 00:18:27 +0100
+Subject: [PATCH 4/4] Migrate to boost's own asio
+
+---
+ hox_Client/hoxAsyncSocket.cpp         |   52 ++++++++++++++++----------------
+ hox_Client/hoxAsyncSocket.h           |   24 +++++++-------
+ hox_Client/hoxCheckUpdatesUI.cpp      |    2 +-
+ hox_Client/hoxCheckUpdatesUI.h        |    5 ++-
+ hox_Client/hoxChesscapeConnection.cpp |   16 +++++-----
+ hox_Client/hoxChesscapeConnection.h   |    8 ++--
+ hox_Client/hoxSocketConnection.cpp    |    4 +-
+ hox_Client/hoxSocketConnection.h      |    9 +++--
+ 8 files changed, 61 insertions(+), 59 deletions(-)
+
+diff --git a/hox_Client/hoxAsyncSocket.cpp b/hox_Client/hoxAsyncSocket.cpp
+index 3771c05..0d7e221 100644
+--- a/hox_Client/hoxAsyncSocket.cpp
++++ b/hox_Client/hoxAsyncSocket.cpp
+@@ -34,7 +34,7 @@
+ //
+ // ----------------------------------------------------------------------------
+ 
+-hoxAsyncSocket::hoxAsyncSocket( asio::io_service&       io_service,
++hoxAsyncSocket::hoxAsyncSocket( boost::asio::io_service&       io_service,
+                                 tcp::resolver::iterator endpoint_iter,
+                                 wxEvtHandler*           evtHandler)
+         : _io_service( io_service )
+@@ -47,7 +47,7 @@ hoxAsyncSocket::hoxAsyncSocket( asio::io_service&       io_service,
+     tcp::endpoint endpoint = *endpoint_iter;
+     m_socket.async_connect( endpoint,
+                             boost::bind(&hoxAsyncSocket::handleConnect, this,
+-                                        asio::placeholders::error, ++endpoint_iter));
++                                        boost::asio::placeholders::error, ++endpoint_iter));
+ }
+ 
+ void
+@@ -65,16 +65,16 @@ hoxAsyncSocket::close()
+ }
+ 
+ void
+-hoxAsyncSocket::handleConnect( const asio::error_code& error,
++hoxAsyncSocket::handleConnect( const boost::system::error_code& error,
+                                tcp::resolver::iterator endpoint_iter)
+ {
+     if ( !error )
+     {
+         m_connectState = CONNECT_STATE_CONNECTED;
+         wxLogDebug("%s: Connection established.", __FUNCTION__);
+-        asio::async_read_until( m_socket, m_inBuffer, "\n\n",
++        boost::asio::async_read_until( m_socket, m_inBuffer, "\n\n",
+                                 boost::bind(&hoxAsyncSocket::handleIncomingData, this,
+-                                            asio::placeholders::error));
++                                            boost::asio::placeholders::error));
+     }
+     else if ( endpoint_iter != tcp::resolver::iterator() )
+     {
+@@ -82,7 +82,7 @@ hoxAsyncSocket::handleConnect( const asio::error_code& error,
+         tcp::endpoint endpoint = *endpoint_iter;
+         m_socket.async_connect( endpoint,
+                                 boost::bind(&hoxAsyncSocket::handleConnect, this,
+-                                            asio::placeholders::error, ++endpoint_iter));
++                                            boost::asio::placeholders::error, ++endpoint_iter));
+     }
+     else  // Failed.
+     {
+@@ -94,7 +94,7 @@ hoxAsyncSocket::handleConnect( const asio::error_code& error,
+ }
+ 
+ void
+-hoxAsyncSocket::handleIncomingData( const asio::error_code& error )
++hoxAsyncSocket::handleIncomingData( const boost::system::error_code& error )
+ {
+     if ( checkAndCloseSocketIfError(error) ) // error detected?
+     {
+@@ -129,9 +129,9 @@ hoxAsyncSocket::handleIncomingData( const asio::error_code& error )
+     }
+ 
+     // Read incoming data (AGAIN!).
+-    asio::async_read_until( m_socket, m_inBuffer, "\n\n",
++    boost::asio::async_read_until( m_socket, m_inBuffer, "\n\n",
+                             boost::bind(&hoxAsyncSocket::handleIncomingData, this,
+-                                        asio::placeholders::error));
++                                        boost::asio::placeholders::error));
+ }
+ 
+ void
+@@ -160,16 +160,16 @@ hoxAsyncSocket::_doWrite( const std::string msg )
+     m_writeQueue.push_back(msg);
+     if ( !write_in_progress )
+     {
+-        asio::async_write( m_socket,
+-                           asio::buffer( m_writeQueue.front().data(),
++        boost::asio::async_write( m_socket,
++                           boost::asio::buffer( m_writeQueue.front().data(),
+                                          m_writeQueue.front().length()),
+                            boost::bind( &hoxAsyncSocket::_handleWrite, this,
+-                                        asio::placeholders::error));
++                                        boost::asio::placeholders::error));
+     }
+ }
+ 
+ void
+-hoxAsyncSocket::_handleWrite( const asio::error_code& error )
++hoxAsyncSocket::_handleWrite( const boost::system::error_code& error )
+ {
+     if ( error )
+     {
+@@ -181,20 +181,20 @@ hoxAsyncSocket::_handleWrite( const asio::error_code& error )
+     m_writeQueue.pop_front();
+     if ( !m_writeQueue.empty() )
+     {
+-        asio::async_write( m_socket,
+-                           asio::buffer( m_writeQueue.front().data(),
++        boost::asio::async_write( m_socket,
++                           boost::asio::buffer( m_writeQueue.front().data(),
+                                          m_writeQueue.front().length()),
+                            boost::bind( &hoxAsyncSocket::_handleWrite, this,
+-                                        asio::placeholders::error));
++                                        boost::asio::placeholders::error));
+     }
+ }
+ 
+ bool
+-hoxAsyncSocket::checkAndCloseSocketIfError( const asio::error_code& error )
++hoxAsyncSocket::checkAndCloseSocketIfError( const boost::system::error_code& error )
+ {
+     std::string sErrorMsg;
+ 
+-    if ( error == asio::error::eof)
++    if ( error == boost::asio::error::eof)
+     {
+         // Socket must have been closed. No need to do it again.
+         sErrorMsg = "Connection closed (EOF)";
+@@ -247,16 +247,16 @@ hoxAsyncSocket::postEvent( const hoxResult      result,
+ // ----------------------------------------------------------------------------
+ 
+ void
+-hoxHttpSocket::handleConnect( const asio::error_code& error,
++hoxHttpSocket::handleConnect( const boost::system::error_code& error,
+                               tcp::resolver::iterator endpoint_iter)
+ {
+     if ( !error )
+     {
+         m_connectState = CONNECT_STATE_CONNECTED;
+         wxLogDebug("%s: Connection established.", __FUNCTION__);
+-        asio::async_read_until( m_socket, m_inBuffer, "\r\n",
++        boost::asio::async_read_until( m_socket, m_inBuffer, "\r\n",
+                                 boost::bind(&hoxHttpSocket::handleIncomingData, this,
+-                                            asio::placeholders::error));
++                                            boost::asio::placeholders::error));
+     }
+     else if ( endpoint_iter != tcp::resolver::iterator() )
+     {
+@@ -264,7 +264,7 @@ hoxHttpSocket::handleConnect( const asio::error_code& error,
+         tcp::endpoint endpoint = *endpoint_iter;
+         m_socket.async_connect( endpoint,
+                                 boost::bind(&hoxHttpSocket::handleConnect, this,
+-                                            asio::placeholders::error, ++endpoint_iter));
++                                            boost::asio::placeholders::error, ++endpoint_iter));
+     }
+     else  // Failed.
+     {
+@@ -276,7 +276,7 @@ hoxHttpSocket::handleConnect( const asio::error_code& error,
+ }
+ 
+ void
+-hoxHttpSocket::handleIncomingData( const asio::error_code& error )
++hoxHttpSocket::handleIncomingData( const boost::system::error_code& error )
+ {
+     if ( checkAndCloseSocketIfError(error) ) // error detected?
+     {
+@@ -284,10 +284,10 @@ hoxHttpSocket::handleIncomingData( const asio::error_code& error )
+     }
+ 
+     // Continue reading remaining data until EOF.
+-    asio::async_read( m_socket, m_inBuffer,
+-                      asio::transfer_at_least(1),
++    boost::asio::async_read( m_socket, m_inBuffer,
++                      boost::asio::transfer_at_least(1),
+                       boost::bind(&hoxHttpSocket::handleIncomingData, this,
+-                                  asio::placeholders::error));
++                                  boost::asio::placeholders::error));
+ }
+ 
+ std::string
+diff --git a/hox_Client/hoxAsyncSocket.h b/hox_Client/hoxAsyncSocket.h
+index e098fce..7b45f7b 100644
+--- a/hox_Client/hoxAsyncSocket.h
++++ b/hox_Client/hoxAsyncSocket.h
+@@ -33,7 +33,7 @@
+ #include <deque>
+ #include <boost/bind.hpp>
+ 
+-using asio::ip::tcp;
++using boost::asio::ip::tcp;
+ 
+ // ----------------------------------------------------------------------------
+ // hoxAsyncSocket
+@@ -51,21 +51,21 @@ protected:
+     };
+ 
+ public:
+-    hoxAsyncSocket( asio::io_service&       io_service,
++    hoxAsyncSocket( boost::asio::io_service&       io_service,
+                     tcp::resolver::iterator endpoint_iter,
+                     wxEvtHandler*           evtHandler );
+     virtual ~hoxAsyncSocket() {}
+ 
+-    virtual void handleIncomingData( const asio::error_code& error );
++    virtual void handleIncomingData( const boost::system::error_code& error );
+ 
+     void write( const std::string& msg );
+     void close();
+ 
+ protected:
+-    virtual void handleConnect( const asio::error_code& error,
++    virtual void handleConnect( const boost::system::error_code& error,
+                                 tcp::resolver::iterator endpoint_iter );
+     // ----
+-    bool checkAndCloseSocketIfError( const asio::error_code& error );
++    bool checkAndCloseSocketIfError( const boost::system::error_code& error );
+     void closeSocket();
+     void postEvent( const hoxResult      result,
+                     const std::string&   sEvent,
+@@ -73,12 +73,12 @@ protected:
+ 
+ private:
+     void _doWrite( const std::string msg );
+-    void _handleWrite( const asio::error_code& error );
++    void _handleWrite( const boost::system::error_code& error );
+ 
+ protected:
+-    asio::io_service&    _io_service; // A reference only!
++    boost::asio::io_service&    _io_service; // A reference only!
+     tcp::socket          m_socket;
+-    asio::deadline_timer m_timer;
++    boost::asio::deadline_timer m_timer;
+  
+     int                  out_tries_; // FIXME: Concurrency problem!
+     std::string          out_msg_;   // FIXME: Concurrency problem!
+@@ -89,7 +89,7 @@ protected:
+     std::string          m_sCurrentEvent;
+                 /* The incoming event (being accumulated so far). */
+ 
+-    asio::streambuf      m_inBuffer; // The buffer of incoming data.
++    boost::asio::streambuf      m_inBuffer; // The buffer of incoming data.
+     ConnectState         m_connectState;
+     wxEvtHandler*        m_evtHandler;
+ };
+@@ -101,7 +101,7 @@ protected:
+ class hoxHttpSocket : public hoxAsyncSocket
+ {
+ public:
+-    hoxHttpSocket( asio::io_service&       io_service,
++    hoxHttpSocket( boost::asio::io_service&       io_service,
+                    tcp::resolver::iterator endpoint_iter,
+                    wxEvtHandler*           evtHandler )
+             : hoxAsyncSocket( io_service, endpoint_iter, evtHandler ) {}
+@@ -110,9 +110,9 @@ public:
+     std::string getResponse();
+ 
+ protected:
+-    virtual void handleConnect( const asio::error_code& error,
++    virtual void handleConnect( const boost::system::error_code& error,
+                                 tcp::resolver::iterator endpoint_iter );
+-    virtual void handleIncomingData( const asio::error_code& error );
++    virtual void handleIncomingData( const boost::system::error_code& error );
+ };
+ 
+ #endif /* __INCLUDED_HOX_ASYNC_SOCKET_H__ */
+diff --git a/hox_Client/hoxCheckUpdatesUI.cpp b/hox_Client/hoxCheckUpdatesUI.cpp
+index a2afd11..47027cd 100644
+--- a/hox_Client/hoxCheckUpdatesUI.cpp
++++ b/hox_Client/hoxCheckUpdatesUI.cpp
+@@ -120,7 +120,7 @@ hoxCheckUpdatesUI::runCheck()
+         sRequest += "\r\n";
+         m_pHttpSocket->write( sRequest );
+ 
+-        m_io_service_thread = new asio::thread( boost::bind(&asio::io_service::run,
++        m_io_service_thread = new boost::thread( boost::bind(&boost::asio::io_service::run,
+                                                             &m_io_service) );
+     }
+     catch (std::exception& e)
+diff --git a/hox_Client/hoxCheckUpdatesUI.h b/hox_Client/hoxCheckUpdatesUI.h
+index e9b1540..10c0691 100644
+--- a/hox_Client/hoxCheckUpdatesUI.h
++++ b/hox_Client/hoxCheckUpdatesUI.h
+@@ -30,6 +30,7 @@
+ 
+ #include "hoxAsyncSocket.h"
+ #include <wx/progdlg.h>
++#include <boost/thread.hpp>
+ #include "hoxTypes.h"
+ 
+ // ----------------------------------------------------------------------------
+@@ -61,9 +62,9 @@ private:
+     int                m_timerValue;  // Timer's value.
+     wxTimer*           m_timer;       // To keep track of time.
+ 
+-    asio::io_service   m_io_service;
++    boost::asio::io_service   m_io_service;
+     hoxHttpSocket*     m_pHttpSocket;
+-    asio::thread*      m_io_service_thread;
++    boost::thread*      m_io_service_thread;
+ 
+     DECLARE_EVENT_TABLE()
+ };
+diff --git a/hox_Client/hoxChesscapeConnection.cpp b/hox_Client/hoxChesscapeConnection.cpp
+index 8d01cab..afeac3d 100644
+--- a/hox_Client/hoxChesscapeConnection.cpp
++++ b/hox_Client/hoxChesscapeConnection.cpp
+@@ -83,7 +83,7 @@ hoxChesscapeWriter::HandleRequest( hoxRequest_APtr apRequest,
+ }
+ 
+ hoxAsyncSocket*
+-hoxChesscapeWriter::CreateSocketAgent( asio::io_service&       io_service,
++hoxChesscapeWriter::CreateSocketAgent( boost::asio::io_service&       io_service,
+                                        tcp::resolver::iterator endpoint_iter,
+                                        wxEvtHandler*           evtHandler)
+ {
+@@ -359,15 +359,15 @@ hoxChesscapeWriter::_WriteLine( const wxString& cmdRequest )
+ //-----------------------------------------------------------------------------
+ 
+ void
+-hoxChesscapeSocket::handleConnect( const asio::error_code& error,
++hoxChesscapeSocket::handleConnect( const boost::system::error_code& error,
+                                         tcp::resolver::iterator endpoint_iter )
+ {
+     if (!error)
+     {
+         m_connectState = CONNECT_STATE_CONNECTED;
+-        asio::async_read_until( m_socket, m_inBuffer, END_CHAR,
++        boost::asio::async_read_until( m_socket, m_inBuffer, END_CHAR,
+                                 boost::bind(&hoxChesscapeSocket::handleIncomingData, this,
+-                                            asio::placeholders::error));
++                                            boost::asio::placeholders::error));
+     }
+     else if (endpoint_iter != tcp::resolver::iterator())
+     {
+@@ -375,7 +375,7 @@ hoxChesscapeSocket::handleConnect( const asio::error_code& error,
+         tcp::endpoint endpoint = *endpoint_iter;
+         m_socket.async_connect( endpoint,
+                                 boost::bind(&hoxChesscapeSocket::handleConnect, this,
+-                                            asio::placeholders::error, ++endpoint_iter));
++                                            boost::asio::placeholders::error, ++endpoint_iter));
+     }
+     else  // Failed.
+     {
+@@ -387,7 +387,7 @@ hoxChesscapeSocket::handleConnect( const asio::error_code& error,
+ }
+ 
+ void
+-hoxChesscapeSocket::handleIncomingData( const asio::error_code& error )
++hoxChesscapeSocket::handleIncomingData( const boost::system::error_code& error )
+ {
+     if ( checkAndCloseSocketIfError(error) ) // error detected?
+     {
+@@ -412,9 +412,9 @@ hoxChesscapeSocket::handleIncomingData( const asio::error_code& error )
+     }
+ 
+     // Read the END token (AGAIN!).
+-    asio::async_read_until( m_socket, m_inBuffer, END_CHAR,
++    boost::asio::async_read_until( m_socket, m_inBuffer, END_CHAR,
+                             boost::bind(&hoxChesscapeSocket::handleIncomingData, this,
+-                                        asio::placeholders::error));
++                                        boost::asio::placeholders::error));
+ }
+ 
+ //-----------------------------------------------------------------------------
+diff --git a/hox_Client/hoxChesscapeConnection.h b/hox_Client/hoxChesscapeConnection.h
+index afd2493..bd87a67 100644
+--- a/hox_Client/hoxChesscapeConnection.h
++++ b/hox_Client/hoxChesscapeConnection.h
+@@ -45,7 +45,7 @@ public:
+ protected:
+     virtual hoxResult HandleRequest( hoxRequest_APtr apRequest,
+                                      wxString&       sError );
+-    virtual hoxAsyncSocket* CreateSocketAgent( asio::io_service&       io_service,
++    virtual hoxAsyncSocket* CreateSocketAgent( boost::asio::io_service&       io_service,
+                                                tcp::resolver::iterator endpoint_iter,
+                                                wxEvtHandler*           evtHandler);
+ 
+@@ -76,16 +76,16 @@ private:
+ class hoxChesscapeSocket : public hoxAsyncSocket
+ {
+ public:
+-    hoxChesscapeSocket( asio::io_service&       io_service,
++    hoxChesscapeSocket( boost::asio::io_service&       io_service,
+                              tcp::resolver::iterator endpoint_iter,
+                              wxEvtHandler*           evtHandler )
+                 : hoxAsyncSocket( io_service, endpoint_iter, evtHandler ) {}
+     virtual ~hoxChesscapeSocket() {}
+ 
+ protected:
+-    virtual void handleConnect( const asio::error_code& error,
++    virtual void handleConnect( const boost::system::error_code& error,
+                                 tcp::resolver::iterator endpoint_iter );
+-    virtual void handleIncomingData( const asio::error_code& error );
++    virtual void handleIncomingData( const boost::system::error_code& error );
+ };
+ 
+ // ----------------------------------------------------------------------------
+diff --git a/hox_Client/hoxSocketConnection.cpp b/hox_Client/hoxSocketConnection.cpp
+index 9505824..501af98 100644
+--- a/hox_Client/hoxSocketConnection.cpp
++++ b/hox_Client/hoxSocketConnection.cpp
+@@ -67,7 +67,7 @@ hoxSocketWriter::AddRequest( hoxRequest_APtr apRequest )
+ }
+ 
+ hoxAsyncSocket*
+-hoxSocketWriter::CreateSocketAgent( asio::io_service&       io_service,
++hoxSocketWriter::CreateSocketAgent( boost::asio::io_service&       io_service,
+                                     tcp::resolver::iterator endpoint_iterator,
+                                     wxEvtHandler*           evtHandler)
+ {
+@@ -241,7 +241,7 @@ hoxSocketWriter::Connect( wxString& sError )
+         // TODO: Set timeout = hoxSOCKET_CLIENT_SOCKET_TIMEOUT.
+ 
+         m_io_service_thread =
+-            new asio::thread( boost::bind(&asio::io_service::run, &m_io_service) );
++            new boost::thread( boost::bind(&boost::asio::io_service::run, &m_io_service) );
+ 
+         // TODO: Not really have enough info to declare a 'success' connection!
+         m_bConnected = true;
+diff --git a/hox_Client/hoxSocketConnection.h b/hox_Client/hoxSocketConnection.h
+index 62fe24a..f682fc8 100644
+--- a/hox_Client/hoxSocketConnection.h
++++ b/hox_Client/hoxSocketConnection.h
+@@ -29,11 +29,12 @@
+ #define __INCLUDED_HOX_SOCKET_CONNECTION_H__
+ 
+ #include <asio.hpp>
++#include <boost/thread.hpp>
+ #include "hoxConnection.h"
+ #include "hoxTypes.h"
+ #include "hoxAsyncSocket.h"
+ 
+-using asio::ip::tcp;
++using boost::asio::ip::tcp;
+ 
+ /* Forward declarations. */
+ class hoxSocketWriter;
+@@ -62,7 +63,7 @@ protected:
+                                      wxString&       sError );
+     virtual hoxResult Connect( wxString& sError );
+ 
+-    virtual hoxAsyncSocket* CreateSocketAgent( asio::io_service&       io_service,
++    virtual hoxAsyncSocket* CreateSocketAgent( boost::asio::io_service&       io_service,
+                                                tcp::resolver::iterator endpoint_iterator,
+                                                wxEvtHandler*           evtHandler );
+     // ----
+@@ -92,9 +93,9 @@ protected:
+                 /* Has the connection been established with the server */
+ 
+ private:
+-    asio::io_service        m_io_service;
++    boost::asio::io_service        m_io_service;
+     hoxAsyncSocket*         m_pSocketAgent;
+-    asio::thread*           m_io_service_thread;
++    boost::thread*           m_io_service_thread;
+ };
+ 
+ // ----------------------------------------------------------------------------
+-- 
+1.6.5.6
+

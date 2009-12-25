@@ -1,0 +1,36 @@
+From fa022ba4d9d04f71976d13edf1906574aa89549f Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Sat, 26 Dec 2009 00:06:15 +0100
+Subject: [PATCH 2/4] Fix file locations
+
+---
+ hox_Client/hoxUtil.cpp |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/hox_Client/hoxUtil.cpp b/hox_Client/hoxUtil.cpp
+index 422746f..01c36f2 100644
+--- a/hox_Client/hoxUtil.cpp
++++ b/hox_Client/hoxUtil.cpp
+@@ -81,8 +81,8 @@ hoxUtil::GetPath( const hoxResourceType rType )
+     wxLogDebug("%s: wxStandardPaths::Get().GetDataDir() = [%s].", __FUNCTION__, base.c_str());
+     prefix = "";
+ #else
+-    base = ::wxPathOnly(wxStandardPaths::Get().GetExecutablePath()) + "/..";
+-    prefix = "/resource";
++    base = "/usr/share/games/hoxchess";
++    prefix = "";
+ #endif
+ 
+     switch ( rType )
+@@ -92,7 +92,7 @@ hoxUtil::GetPath( const hoxResourceType rType )
+         case hoxRT_PIECE:     return base + prefix + "/pieces/";
+         case hoxRT_BOARD:     return base + prefix + "/boards/";
+         case hoxRT_LOCALE:    return base + prefix + "/locale/";
+-        case hoxRT_AI_PLUGIN: return base + "/plugins/";
++        case hoxRT_AI_PLUGIN: return "/usr/games/lib/hoxchess/";
+ 
+         default /* hoxRT_UNKNOWN */: return "__UNKNOWN__";
+     }
+-- 
+1.6.5.6
+
