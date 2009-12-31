@@ -1,0 +1,3 @@
+# environment variable for DrQueue
+DRQUEUE_MASTER=""
+DRQUEUE_ROOT="/usr"
