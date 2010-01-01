@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -26,7 +26,7 @@ src_prepare() {
 	rm -Rf lib/{asio-*,boost_*} || die 'rm failed'
 
 	epatch \
-		"${FILESDIR}"/${P}-fix-boost-compile-flags.patch \
+		"${FILESDIR}"/${P}-fix-compile-flags.patch \
 		"${FILESDIR}"/${P}-fix-file-locations.patch \
 		"${FILESDIR}"/${P}-migrate-to-boosts-own-asio.patch
 }
@@ -45,4 +45,6 @@ src_install() {
 	doins plugins/*.so || die "doins failed"
 
 	dogamesbin hox_Client/hoxchess || die "dogamesbin failed"
+
+	prepgamesdirs
 }

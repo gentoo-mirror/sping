@@ -1,0 +1,146 @@
+diff --git a/hox_Project/AI_robot/Makefile b/hox_Project/AI_robot/Makefile
+index 40df468..055cac3 100644
+--- a/hox_Project/AI_robot/Makefile
++++ b/hox_Project/AI_robot/Makefile
+@@ -6,7 +6,6 @@ BOOST_CXXFLAGS =
+ 
+ # Common flags
+ CXX         = g++
+-CXXFLAGS    = $(BOOST_CXXFLAGS) -Wall -Werror
+ LDLIBS      = $(ST_LDLIBS) -lpthread
+ LDFLAGS     =
+ DEBUGFLAGS  = -g
+diff --git a/hox_Project/hox_Client/Makefile b/hox_Project/hox_Client/Makefile
+index cc3379f..ae69b70 100644
+--- a/hox_Project/hox_Client/Makefile
++++ b/hox_Project/hox_Client/Makefile
+@@ -28,8 +28,8 @@ DEBUGFLAGS  =
+ #DEBUGFLAGS  = -g
+ 
+ #CXXFLAGS = $(WX_CXXFLAGS) -I../lib/boost_1_41_0 -I../lib/asio-1.4.1/include
+-CXXFLAGS = $(WX_CXXFLAGS)
+-LDFLAGS     = -pthread
++_CXXFLAGS = $(CXXFLAGS) $(WX_CXXFLAGS) -I/usr/include/boost
++LDFLAGS     = -pthread -lboost_thread -lboost_system
+ 
+ # The main source
+ MAIN_SRC := \
+@@ -73,7 +73,7 @@ SOURCES := \
+ OBJECTS := $(SOURCES:.cpp=.o)
+ 
+ .cpp.o :
+-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -c  -o $@ $<
++	$(CXX) $(_CXXFLAGS) $(DEBUGFLAGS) -c  -o $@ $<
+ 
+ all: $(PROGRAM)
+ 
+diff --git a/hox_Project/plugins/AI_Folium/Makefile b/hox_Project/plugins/AI_Folium/Makefile
+index caddfd6..2029106 100644
+--- a/hox_Project/plugins/AI_Folium/Makefile
++++ b/hox_Project/plugins/AI_Folium/Makefile
+@@ -9,7 +9,7 @@ LIBRARY = AI_Folium
+ # Common flags
+ CXX         = g++
+ 
+-CXXFLAGS = -fPIC -Wall -I../common -I../../lib/boost_1_41_0
++_CXXFLAGS = $(CXXFLAGS) -I../common -I/usr/include/boost
+ #DEBUGFLAGS  = -g
+ 
+ # The main source
+@@ -37,7 +37,7 @@ SOURCES := \
+ OBJECTS := $(SOURCES:.cpp=.o)
+ 
+ .cpp.o :
+-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -c -o $@ $<
++	$(CXX) $(_CXXFLAGS) $(DEBUGFLAGS) -c -o $@ $<
+ 
+ all: $(LIBRARY)
+ 	cp -v libAI_Folium.so.1.0 ../AI_Folium.so
+diff --git a/hox_Project/plugins/AI_HaQiKiD/Makefile b/hox_Project/plugins/AI_HaQiKiD/Makefile
+index 5b00d00..5769bad 100644
+--- a/hox_Project/plugins/AI_HaQiKiD/Makefile
++++ b/hox_Project/plugins/AI_HaQiKiD/Makefile
+@@ -9,7 +9,7 @@ LIBRARY = AI_HaQiKiD
+ # Common flags
+ CXX         = g++
+ 
+-CXXFLAGS = -fPIC -Wall -I../common
++_CXXFLAGS = $(CXXFLAGS) -I../common
+ #DEBUGFLAGS  = -g
+ 
+ # The main source
+@@ -24,7 +24,7 @@ SOURCES := \
+ OBJECTS := $(SOURCES:.cpp=.o)
+ 
+ .cpp.o :
+-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -c -o $@ $<
++	$(CXX) $(_CXXFLAGS) $(DEBUGFLAGS) -c -o $@ $<
+ 
+ all: $(LIBRARY)
+ 	cp -v libAI_HaQiKiD.so.1.0 ../AI_HaQiKiD.so
+diff --git a/hox_Project/plugins/AI_MaxQi/Makefile b/hox_Project/plugins/AI_MaxQi/Makefile
+index 95d8585..8596a6e 100644
+--- a/hox_Project/plugins/AI_MaxQi/Makefile
++++ b/hox_Project/plugins/AI_MaxQi/Makefile
+@@ -9,7 +9,7 @@ LIBRARY = AI_MaxQi
+ # Common flags
+ CXX         = g++
+ 
+-CXXFLAGS = -fPIC -Wall -I../common
++_CXXFLAGS = $(CXXFLAGS) -I../common
+ #DEBUGFLAGS  = -g
+ 
+ # The main source
+@@ -24,7 +24,7 @@ SOURCES := \
+ OBJECTS := $(SOURCES:.cpp=.o)
+ 
+ .cpp.o :
+-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -c -o $@ $<
++	$(CXX) $(_CXXFLAGS) $(DEBUGFLAGS) -c -o $@ $<
+ 
+ all: $(LIBRARY)
+ 	cp -v libAI_MaxQi.so.1.0 ../AI_MaxQi.so
+diff --git a/hox_Project/plugins/AI_TSITO/Makefile b/hox_Project/plugins/AI_TSITO/Makefile
+index 9f14cb2..2751088 100644
+--- a/hox_Project/plugins/AI_TSITO/Makefile
++++ b/hox_Project/plugins/AI_TSITO/Makefile
+@@ -9,7 +9,7 @@ LIBRARY = AI_TSITO
+ # Common flags
+ CXX         = g++
+ 
+-CXXFLAGS = -fPIC -Wall -I../common
++_CXXFLAGS = $(CXXFLAGS) -I../common
+ #DEBUGFLAGS  = -g
+ 
+ # The main source
+@@ -32,7 +32,7 @@ SOURCES := \
+ OBJECTS := $(SOURCES:.cpp=.o)
+ 
+ .cpp.o :
+-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -c -o $@ $<
++	$(CXX) $(_CXXFLAGS) $(DEBUGFLAGS) -c -o $@ $<
+ 
+ all: $(LIBRARY)
+ 	cp -v libAI_TSITO.so.1.0 ../AI_TSITO.so
+diff --git a/hox_Project/plugins/AI_XQWLight/Makefile b/hox_Project/plugins/AI_XQWLight/Makefile
+index 60404e6..123c9c4 100644
+--- a/hox_Project/plugins/AI_XQWLight/Makefile
++++ b/hox_Project/plugins/AI_XQWLight/Makefile
+@@ -9,7 +9,7 @@ LIBRARY = AI_XQWLight
+ # Common flags
+ CXX         = g++
+ 
+-CXXFLAGS = -fPIC -Wall -I../common
++_CXXFLAGS = $(CXXFLAGS) -I../common
+ #DEBUGFLAGS  = -g
+ 
+ # The main source
+@@ -24,7 +24,7 @@ SOURCES := \
+ OBJECTS := $(SOURCES:.cpp=.o)
+ 
+ .cpp.o :
+-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -c -o $@ $<
++	$(CXX) $(_CXXFLAGS) $(DEBUGFLAGS) -c -o $@ $<
+ 
+ all: $(LIBRARY)
+ 	cp -v libAI_XQWLight.so.1.0 ../AI_XQWLight.so
