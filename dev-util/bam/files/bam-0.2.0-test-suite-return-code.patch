@@ -1,0 +1,10 @@
+--- scripts/test.py_BACKUP	2010-01-03 00:13:29.000000000 +0100
++++ scripts/test.py	2010-01-03 00:14:27.000000000 +0100
+@@ -178,6 +178,7 @@
+ 	print "FAILED TESTS:"
+ 	for t in failed_tests:
+ 		print "\t"+t
++	sys.exit(1)
+ else:
+ 	print "ALL TESTS PASSED!"
+ 
