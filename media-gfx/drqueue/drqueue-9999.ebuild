@@ -1,14 +1,14 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI="2"
 
-inherit eutils python toolchain-funcs distutils
+inherit eutils distutils git
 
 DESCRIPTION="Render farm managing software"
 HOMEPAGE="http://www.drqueue.org/"
-SRC_URI="http://drqueue.org/files/1-Sources_all_platforms/${PN}.${PV}.tgz"
+EGIT_REPO_URI="git://gitorious.org/drqueue-git/drqueue-git.git"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -28,15 +28,11 @@ DEPEND="${RDEPEND}
 
 pkg_setup() {
 	enewgroup drqueue
-	enewuser drqueue -1 /bin/tcsh /dev/null daemon,drqueue
+	enewuser drqueue -1 /bin/bash /dev/null daemon,drqueue
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/${P}-mips-linux.patch \
-		"${FILESDIR}"/${P}-compile-flags.patch
-	if use ruby; then
-		epatch "${FILESDIR}"/${P}-SConstruct.patch
-	fi
+	epatch "${FILESDIR}"/${PN}-0.64.3-compile-flags.patch
 }
 
 src_compile() {
@@ -69,45 +65,48 @@ pkg_preinst() {
 }
 
 src_install() {
-	dodir /usr/share
-	scons -j1 PREFIX=${D}/usr/share install || die "install failed"
+	dodir /var/lib
+	scons -j1 PREFIX="${D}"/var/lib install || die "install failed"
 
-	rm -R ${D}/usr/share/drqueue/bin/viewcmd || die "rm failed"
+	# not really needed
+	rm -R "${D}"/var/lib/drqueue/bin/viewcmd || die "rm failed"
 
 	# install {conf,init,env}.d files
 	insinto /
-	doins -r "${FILESDIR}"/${PV} || die "doins failed"
+	doins -r "${FILESDIR}"/${PV}/etc || die "doins failed"
+	fperms 755 /etc/init.d/drq{m,s}d || die "fperms failed"
 
 	# create the drqueue pid directory
 	dodir /var/run/drqueue
 	keepdir /var/run/drqueue
 
-	# move etcs to /etc/drqueue
-	dodir /etc/drqueue
-	mv ${D}/usr/share/drqueue/etc/* ${D}/etc/drqueue
-	rmdir ${D}/usr/share/drqueue/etc
+	# move logs dir to /var/log
+	dodir /var/log
+	mv "${D}"/var/lib/drqueue/logs "${D}"/var/log/drqueue
 
-	# move bins to /usr/bin
-	# dodir /usr/bin
-	# mv ${D}/usr/share/drqueue/bin/* ${D}/usr/bin
-	# rmdir ${D}/usr/share/drqueue/bin
-
+	# link bins to /usr/bin
+	dodir /usr/bin
+	for cmd in blockhost cjob drqman jobfinfo \
+			jobinfo master requeue sendjob slave ; do
+		dosym /var/lib/drqueue/bin/${cmd} /usr/bin/ \
+				|| die "dosym failed"
+	done
+	
 	if use python; then
-		cd ${S}/python/
+		cd "${S}"/python/
 		distutils_src_install
-		dodir /usr/share/${PN}/python
+		dodir /var/lib/${PN}/python
 
 		# Install DRKeewee web service and example python scripts
-		insinto /usr/share/${PN}/python
+		insinto /var/lib/${PN}/python
 		doins -r DrKeewee examples || die "doins failed"
 	fi
 
 	if use ruby; then
-		cd ${S}/ruby/
-		emake DESTDIR=${D} install || die "emake failed"
+		cd "${S}"/ruby/
+		emake DESTDIR="${D}" install || die "emake failed"
 	fi
 }
-
 
 pkg_postinst() {
 	einfo "Edit /etc/conf.d/drqsd /etc/env.d/02drqueue"
@@ -118,6 +117,13 @@ pkg_postinst() {
 	einfo "which require configuration, mainly"
 	einfo "master.conf and slave.conf."
 	if use python ; then
-		einfo "DrKeewee can be found in /usr/share/drqueue/python"
+		einfo ""
+		einfo "DrKeewee can be found in /var/lib/drqueue/python"
+		
+		python_mod_optimize "$(python_get_sitedir)"/drqueue
 	fi
+}
+
+pkg_postrm() {
+	use python && python_mod_cleanup "$(python_get_sitedir)"/drqueue
 }
