@@ -31,10 +31,6 @@ pkg_setup() {
 	enewuser drqueue -1 /bin/bash /dev/null daemon,drqueue
 }
 
-src_prepare() {
-	epatch "${FILESDIR}"/${PN}-0.64.3-compile-flags.patch
-}
-
 src_compile() {
 	if use X; then
 		scons ${MAKEOPTS} build_drman=yes || die "scons failed"
@@ -66,7 +62,7 @@ pkg_preinst() {
 
 src_install() {
 	dodir /var/lib
-	scons -j1 PREFIX="${D}"/var/lib install || die "install failed"
+	scons PREFIX="${D}"/var/lib install || die "install failed"
 
 	# not really needed
 	rm -R "${D}"/var/lib/drqueue/bin/viewcmd || die "rm failed"
@@ -91,6 +87,12 @@ src_install() {
 		dosym /var/lib/drqueue/bin/${cmd} /usr/bin/ \
 				|| die "dosym failed"
 	done
+
+	# install documentation
+	dodoc AUTHORS COPYING ChangeLog INSTALL \
+			NEWS README README.mentalray \
+			README.python README.shell_variables \
+			setenv || die "dodoc failed"
 	
 	if use python; then
 		cd "${S}"/python/
@@ -112,10 +114,6 @@ pkg_postinst() {
 	einfo "Edit /etc/conf.d/drqsd /etc/env.d/02drqueue"
 	einfo "and /etc/conf.d/drqmd DRQUEUE_MASTER=\"hostname\""
 	einfo "to reflect your master's hostname."
-	einfo ""
-	einfo "/etc/drqueue contains further files"
-	einfo "which require configuration, mainly"
-	einfo "master.conf and slave.conf."
 	if use python ; then
 		einfo ""
 		einfo "DrKeewee can be found in /var/lib/drqueue/python"
