@@ -10,7 +10,7 @@ MY_PN="OpenLieroX"
 MY_P="${MY_PN}_${PV}"
 DESCRIPTION="Real-time excessive Worms-clone"
 HOMEPAGE="http://openlierox.sourceforge.net/"
-SRC_URI="mirror://sourceforge/openlierox/OpenLieroX_${PV}.src.tar.bz2"
+SRC_URI="mirror://sourceforge/openlierox/${MY_P}.src.tar.bz2"
 
 LICENSE="LGPL-2"
 SLOT="0"
