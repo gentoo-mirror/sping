@@ -4,15 +4,15 @@
 
 EAPI="2"
 
-inherit eutils distutils git
+inherit eutils distutils
 
 DESCRIPTION="Render farm managing software"
 HOMEPAGE="http://www.drqueue.org/"
-EGIT_REPO_URI="git://gitorious.org/drqueue-git/drqueue-git.git"
+SRC_URI="http://drqueue.org/files/1-Sources_all_platforms/${PN}.${PV}.tgz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="X python ruby"
 
 RDEPEND="X? ( >=x11-libs/gtk+-2 )
@@ -29,6 +29,11 @@ DEPEND="${RDEPEND}
 pkg_setup() {
 	enewgroup drqueue
 	enewuser drqueue -1 /bin/bash /dev/null daemon,drqueue
+}
+
+src_prepare() {
+	epatch "${FILESDIR}"/${P}-compile-flags.patch \
+			"${FILESDIR}"/${P}-sconstruct.patch
 }
 
 src_compile() {
@@ -93,8 +98,7 @@ src_install() {
 	# install documentation
 	dodoc AUTHORS ChangeLog INSTALL \
 			NEWS README README.mentalray \
-			README.python README.shell_variables \
-			setenv || die "dodoc failed"
+			README.python setenv || die "dodoc failed"
 
 	if use python; then
 		cd "${S}"/python/
