@@ -15,8 +15,10 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="dev-util/subversion"
-RDEPEND="${DEPEND}"
+DEPEND="dev-util/subversion
+	x11-libs/qt-core"
+RDEPEND="${DEPEND}
+	dev-util/git"
 
 src_prepare() {
 	sed -i 's|^\(APR_INCLUDE = /usr/include/apr-1\)\.0|\1|' "${S}"/src/src.pro
