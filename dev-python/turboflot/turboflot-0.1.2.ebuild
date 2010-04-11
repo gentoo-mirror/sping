@@ -16,7 +16,8 @@ KEYWORDS=""
 SLOT="0"
 IUSE=""
 
-RDEPEND=">=dev-python/turbogears-1.0.3.2"
-DEPEND=""
+RDEPEND=">=dev-python/turbogears-1.0.3.2
+	<dev-python/turbojson-1.2"
+DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${MY_P}"
