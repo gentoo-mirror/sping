@@ -16,15 +16,20 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="virtual/python
-	sys-apps/findutils"
 
-RDEPEND="${DEPEND}
+RDEPEND="dev-lang/python
 	>=virtual/mysql-5
 	=dev-python/turbogears-1*
 	>=dev-python/sqlalchemy-0.5
 	>=dev-python/genshi-0.5.1
-	dev-python/turboflot"
+	dev-python/turboflot
+	>=dev-python/myghty-1.1
+	<dev-python/turbojson-1.2
+	>=dev-python/elixir-0.4"
+
+DEPEND="${RDEPEND}
+	sys-apps/findutils"
+
 
 src_install() {
 	# Yes, this is a mess.
