@@ -6,7 +6,7 @@ DESCRIPTION="Displays PDF presentation slides with style."
 
 MY_P="Impressive-${PV}"
 
-HOMEPAGE="http://wiki2beamer.sourceforge.net/"
+HOMEPAGE="http://impressive.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
 LICENSE="GPL-2"
