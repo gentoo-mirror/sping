@@ -28,7 +28,13 @@ DEPEND=">=sys-apps/hal-0.5.8.1
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	./autogen.sh || die './autogen.sh failed'
+	sed 's|\(XDT_CHECK_PACKAGE(\[EXO\], \[exo-\)0\.3\(\], \[0\.3\.1\.12rc2\])\)|\11\2|' \
+		-i configure.in.in \
+		|| die 'sed failed (file missing)'
+	sed 's|-Werror||' -i panel-plugin/Makefile.am \
+		|| die 'sed failed (file missing)'
+
+	NOCONFIGURE=true ./autogen.sh || die './autogen.sh failed'
 }
 
 pkg_setup() {
