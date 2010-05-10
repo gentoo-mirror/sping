@@ -28,9 +28,11 @@ DEPEND=">=sys-apps/hal-0.5.8.1
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	sed 's|\(XDT_CHECK_PACKAGE(\[EXO\], \[exo-\)0\.3\(\], \[0\.3\.1\.12rc2\])\)|\11\2|' \
-		-i configure.in.in \
-		|| die 'sed failed (file missing)'
+	if has_version '>=xfce-base/exo-0.5' ; then
+		sed 's|\(XDT_CHECK_PACKAGE(\[EXO\], \[exo-\)0\.3\(\], \[0\.3\.1\.12rc2\])\)|\11\2|' \
+			-i configure.in.in \
+			|| die 'sed failed (file missing)'
+	fi
 	sed 's|-Werror||' -i panel-plugin/Makefile.am \
 		|| die 'sed failed (file missing)'
 
