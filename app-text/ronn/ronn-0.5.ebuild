@@ -17,3 +17,15 @@ IUSE=""
 
 DEPEND=">=dev-ruby/hpricot-0.8.2"
 RDEPEND="${DEPEND}"
+
+src_install() {
+	ruby-ng_src_install
+	cd all/${P} || die 'cd failed'
+
+	doman man/*.[1-9] || die 'doman failed'
+
+	insinto /usr/share/${PF}/samples
+	doins man/*.ronn || die 'doins failed'
+
+	dodoc README.md
+}
