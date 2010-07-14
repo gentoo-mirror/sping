@@ -9,12 +9,9 @@ inherit eutils autotools
 
 KERNEL_DIR=/usr/src/linux-2.6.32-gentoo-r12
 
-MY_PN=spl
-MY_P=${MY_PN}-${PV}
-
 DESCRIPTION="Solaris Porting Layer - a Linux kernel module providing some Solaris kernel APIs"
 HOMEPAGE="http://wiki.github.com/behlendorf/spl/"
-SRC_URI="http://github.com/downloads/behlendorf/${MY_PN}/${MY_P}.tar.gz"
+SRC_URI="http://github.com/downloads/behlendorf/${PN}/${P}.tar.gz"
 
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
@@ -23,8 +20,6 @@ IUSE=""
 
 DEPEND="=sys-kernel/gentoo-sources-2.6.32-r12"
 RDEPEND="${DEPEND}"
-
-S=${WORKDIR}/${MY_P}
 
 require_built_kernel() {
 	for f in "${KERNEL_DIR}"/include/linux/{bounds.h,utsrelease.h} ; do
