@@ -6,7 +6,7 @@ EAPI="2"
 
 inherit git
 
-KERNEL_DIR=/usr/src/linux-2.6.32-gentoo-r12
+KERNEL_DIR=/usr/src/linux
 
 DESCRIPTION="Solaris Porting Layer - a Linux kernel module providing some Solaris kernel APIs"
 HOMEPAGE="http://wiki.github.com/behlendorf/spl/"
@@ -18,11 +18,15 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="=sys-kernel/gentoo-sources-2.6.32-r12"
+DEPEND=">=virtual/linux-sources-2.6.32"
 RDEPEND="${DEPEND}"
 
 require_built_kernel() {
-	for f in "${KERNEL_DIR}"/include/linux/{bounds.h,utsrelease.h} ; do
+	einfo ===========================================
+	einfo Building against $(cat ${KERNEL_DIR}/include/config/kernel.release) ...
+	einfo ===========================================
+
+	for f in "${KERNEL_DIR}"/include/*/{bounds.h,utsrelease.h} ; do
 		if [[ ! -f "${f}" ]]; then
 			die "File \"${f}\" missing - has that kernel been built?"
 		fi
