@@ -4,12 +4,13 @@
 
 EAPI="2"
 
+WANT_AUTOMAKE="1.11"
 AT_M4DIR=./config  # for aclocal called by eautoreconf
 
 EGIT_REPO_URI="http://github.com/behlendorf/zfs.git"
 EGIT_BRANCH="top"
 
-inherit git eutils autotools
+inherit git eutils autotools linux-mod
 
 DESCRIPTION="Native ZFS for Linux"
 HOMEPAGE="http://wiki.github.com/behlendorf/zfs/"
@@ -22,25 +23,25 @@ IUSE=""
 
 DEPEND=">=sys-devel/spl-0.4.9
 	>=virtual/linux-sources-2.6.32"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	!sys-fs/zfs-fuse"
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-0.4.9-linking.patch
+	epatch "${FILESDIR}"/${P}-includedir.patch
 	eautoreconf
 }
 
 src_configure() {
-	local kernel_dir=$(readlink -m /usr/src/linux)
-	local kernel_version=${kernel_dir##/usr/src/linux-}
-	local spl_dir=$(ls -1d /usr/src/spl-*/"${kernel_version}" | tail -n 1)
-
-	einfo ===========================================
-	einfo Building against ${kernel_version} ...
-	einfo ===========================================
-
+	set_arch_to_kernel
 	econf --with-config=all \
-			--with-linux="${kernel_dir}" --with-linux-obj="${kernel_dir}" \
-			--with-spl="${spl_dir}" --with-spl-obj="${spl_dir}"/module
+			--with-linux="${KERNEL_DIR}" --with-linux-obj="${KERNEL_DIR}" \
+			--with-spl=/usr/include/spl --with-spl-obj=/usr/include/spl/module
+}
+
+src_compile() {
+	set_arch_to_kernel
+	default # _not_ the one from linux-mod
 }
 
 src_install() {
