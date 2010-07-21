@@ -4,10 +4,9 @@
 
 EAPI="2"
 
+WANT_AUTOMAKE="1.11"
 AT_M4DIR=./config  # for aclocal called by eautoreconf
-inherit eutils autotools
-
-KERNEL_DIR=/usr/src/linux
+inherit linux-info eutils autotools
 
 DESCRIPTION="Solaris Porting Layer - a Linux kernel module providing some Solaris kernel APIs"
 HOMEPAGE="http://wiki.github.com/behlendorf/spl/"
@@ -21,30 +20,15 @@ IUSE=""
 DEPEND="~virtual/linux-sources-2.6.32"
 RDEPEND="${DEPEND}"
 
-require_built_kernel() {
-	einfo ===========================================
-	einfo Building against $(cat ${KERNEL_DIR}/include/config/kernel.release) ...
-	einfo ===========================================
-
-	for f in "${KERNEL_DIR}"/include/linux/{bounds.h,utsrelease.h} ; do
-		if [[ ! -f "${f}" ]]; then
-			die "File \"${f}\" missing - has that kernel been built?"
-		fi
-	done
-}
-
-pkg_setup() {
-	require_built_kernel
-}
-
 src_prepare() {
 	epatch "${FILESDIR}"/${P}-werror.patch \
-		"${FILESDIR}"/${P}-files-fdtable.patch
-
+		"${FILESDIR}"/${P}-files-fdtable.patch \
+		"${FILESDIR}"/${P}-includedir.patch
 	eautoreconf
 }
 
 src_configure() {
+	set_arch_to_kernel
 	econf --with-config=all --with-linux="${KERNEL_DIR}" --with-linux-obj="${KERNEL_DIR}"
 }
 
