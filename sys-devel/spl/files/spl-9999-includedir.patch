@@ -7,7 +7,7 @@ index 6ed7cda..622e68a 100644
  
  install-data-local:
 -	destname=spl-$(SPL_META_VERSION)/$(LINUX_VERSION); \
--	instdest=$(DESTDIR)/${prefix}/src/$$destname; \
+-	instdest=$(DESTDIR)/usr/src/$$destname; \
 +	instdest=$(DESTDIR)/${includedir}/spl; \
  	instfiles=`find . -name '*.h'`; \
          for instfile in $$instfiles; do \
@@ -21,7 +21,7 @@ index 8c4fed9..af36071 100644
  if CONFIG_KERNEL
  install-data-local:
 -	destname=spl-$(SPL_META_VERSION)/$(LINUX_VERSION); \
--	instdest=$(DESTDIR)/${prefix}/src/$$destname; \
+-	instdest=$(DESTDIR)/usr/src/$$destname; \
 +	instdest=$(DESTDIR)/${includedir}/spl; \
  	echo "${SPL_META_VERSION}" >$$instdest/spl.release; \
  	for instfile in $(noinst_HEADERS) module/$(LINUX_SYMBOLS); do \
