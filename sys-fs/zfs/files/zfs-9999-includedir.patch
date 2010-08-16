@@ -7,7 +7,7 @@ index 642254d..d2200ce 100644
  if CONFIG_KERNEL
  install-data-local:
 -	destname=zfs-$(ZFS_META_VERSION)/$(LINUX_VERSION); \
--	instdest=$(DESTDIR)/${prefix}/src/$$destname; \
+-	instdest=$(DESTDIR)/usr/src/$$destname; \
 +	instdest=$(DESTDIR)/${includedir}/zfs-linux; \
  	echo "${ZFS_META_VERSION}" >$$instdest/zfs.release; \
  	for instfile in $(noinst_HEADERS) module/$(LINUX_SYMBOLS); do \
@@ -21,7 +21,7 @@ index b41a539..304840e 100644
  	find ${DESTDIR}/lib/modules/ -name 'modules.*' | xargs ${RM}
  	# Install the required headers in to the kernel source
 -	destname=zfs-@ZFS_META_VERSION@/@LINUX_VERSION@; \
--	instdest=$(DESTDIR)/@prefix@/src/$$destname; \
+-	instdest=$(DESTDIR)/usr/src/$$destname; \
 +	instdest=$(DESTDIR)/@prefix@/@includedir@/zfs-linux; \
  	(find . -mindepth 3 -name '*.h' | xargs -Ihdr sh -c \
  	 "DEST=hdr && install -D hdr $$instdest/\$${DEST#*/*/*/}") || exit 1
