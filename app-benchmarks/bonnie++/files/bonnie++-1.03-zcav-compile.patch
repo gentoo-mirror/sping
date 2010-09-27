@@ -1,0 +1,14 @@
+diff --git a/zcav.cpp b/zcav.cpp
+index 00f7037..2684621 100644
+--- a/zcav.cpp
++++ b/zcav.cpp
+@@ -13,6 +13,9 @@
+ #include <vector.h>
+ #endif
+ 
++using namespace std;
++#include <cstring>
++
+ // Read the specified number of megabytes of data from the fd and return the
+ // amount of time elapsed in seconds.
+ double readmegs(int fd, int size, char *buf);

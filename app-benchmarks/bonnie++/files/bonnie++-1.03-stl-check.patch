@@ -1,0 +1,15 @@
+diff --git a/configure.in b/configure.in
+index 1c0c14a..a2df1e2 100644
+--- a/configure.in
++++ b/configure.in
+@@ -67,8 +67,8 @@ AC_SUBST(exes)
+ AC_SUBST(man8)
+ exes="bonnie++"
+ man8="bonnie++.8"
+-AC_CHECK_HEADERS(vector.h vector, exes="$exes zcav" man8="$man8 zcav.8", echo "STL not installed so no ZCAV!")
+-AC_CHECK_HEADERS(algo.h algo)
++AC_CHECK_HEADERS(vector, exes="$exes zcav" man8="$man8 zcav.8", echo "STL not installed so no ZCAV!")
++AC_CHECK_HEADERS(algo)
+ 
+ AC_SUBST(aix_mem_size)
+ if [[ -f /etc/objrepos ]]; then
