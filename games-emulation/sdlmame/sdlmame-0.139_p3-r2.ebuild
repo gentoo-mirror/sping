@@ -59,8 +59,16 @@ src_unpack() {
 }
 
 src_prepare() {
-	# Convert code and patches from <CR><LF> to <LF> (bug #336004)
-	find . -print0 | xargs --null dos2unix -o
+	# Convert all patched files and patches from <CR><LF> to <LF> (bug #336004)
+	find . \( -name '*.h' \
+			-o -name '*.c' \
+			-o -name '*.mak' \
+			-o -name '*.m' \
+			-o -name '*.lay' \
+			-o -name 'makefile' \
+			-o -name '*.diff' \
+			\) -print0 \
+		| xargs --null dos2unix -o
 
 	if [[ $PV == *_p* ]] ; then
 		einfo "Patching release with source updates"
