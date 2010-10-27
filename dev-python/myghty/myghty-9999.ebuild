@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-python/myghty/myghty-1.1.ebuild,v 1.2 2007/07/04 17:47:36 pythonhead Exp $
 
-NEED_PYTHON=2.4
+PYTHON_DEPEND="2:2.4"
 
 ESVN_REPO_URI="http://svn.myghty.org/myghty/trunk/"
 
