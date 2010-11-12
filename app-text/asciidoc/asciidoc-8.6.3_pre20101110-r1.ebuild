@@ -27,6 +27,13 @@ RDEPEND=">=app-text/docbook-xsl-stylesheets-1.75
 "
 DEPEND=""
 
+# BEGIN mercurial-only
+DEPEND="${DEPEND}
+	dev-util/aap
+	www-client/lynx
+	dev-util/source-highlight"
+# END mercurial-only
+
 S=${WORKDIR}/hg
 
 pkg_setup() {
@@ -63,9 +70,7 @@ src_compile() {
 	python a2x.py -f manpage doc/asciidoc.1.txt || die
 	python a2x.py -f manpage doc/a2x.1.txt || die
 
-	for i in README BUGS INSTALL CHANGELOG ; do
-		cp ${i}{.txt,}
-	done
+	( cd doc && aap -f main.aap ../{CHANGELOG,README,BUGS} )
 }
 # END mercurial-only
 
