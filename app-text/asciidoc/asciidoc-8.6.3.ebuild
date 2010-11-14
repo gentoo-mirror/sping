@@ -7,17 +7,23 @@ EAPI="3"
 PYTHON_DEPEND="2:2.5"
 RESTRICT_PYTHON_ABIS="3.*"
 
-inherit autotools mercurial python
+[ "$PV" == "9999" ] && inherit mercurial
+inherit autotools python
 
 DESCRIPTION="A text document format for writing short documents, articles, books and UNIX man pages"
 HOMEPAGE="http://www.methods.co.nz/asciidoc/"
-SRC_URI=""  # mirror://sourceforge/${PN}/${P}.tar.gz
-EHG_REPO_URI="https://asciidoc.googlecode.com/hg/"
-EHG_REVISION="9fb64750d9996796a2c0d87c037ca3aab300b507"
+if [ "$PV" == "9999" ]; then
+	EHG_REPO_URI="https://asciidoc.googlecode.com/hg/"
+	SRC_URI=""
+	KEYWORDS=""
+	S=${WORKDIR}/hg
+else
+	SRC_URI="mirror://sourceforge/project/${PN}/${PN}/${PV}/${P}.tar.gz"
+	KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~x86-solaris"
+fi
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~x86-solaris"
 IUSE="examples vim-syntax"
 
 RDEPEND=">=app-text/docbook-xsl-stylesheets-1.75
@@ -27,14 +33,12 @@ RDEPEND=">=app-text/docbook-xsl-stylesheets-1.75
 "
 DEPEND=""
 
-# BEGIN mercurial-only
-DEPEND="${DEPEND}
-	dev-util/aap
-	www-client/lynx
-	dev-util/source-highlight"
-# END mercurial-only
-
-S=${WORKDIR}/hg
+if [ "$PV" == "9999" ]; then
+	DEPEND="${DEPEND}
+		dev-util/aap
+		www-client/lynx
+		dev-util/source-highlight"
+fi
 
 pkg_setup() {
 	python_set_active_version 2
@@ -54,25 +58,20 @@ src_prepare() {
 	sed -i -e "s:^CONF_DIR=.*:CONF_DIR='${EPREFIX}/etc/asciidoc':" \
 		"${S}/asciidoc.py" || die
 
-	# BEGIN mercurial-only
-	eautoconf
-	# END mercurial-only
+	[ "$PV" == "9999" ] && eautoconf
 }
 
 src_configure() {
 	econf --sysconfdir="${EPREFIX}"/usr/share
 }
 
-# BEGIN mercurial-only
 src_compile() {
 	default
 
-	python a2x.py -f manpage doc/asciidoc.1.txt || die
-	python a2x.py -f manpage doc/a2x.1.txt || die
-
-	( cd doc && aap -f main.aap ../{CHANGELOG,README,BUGS} )
+	if [ "$PV" == "9999" ]; then
+		( cd doc && aap -f main.aap ../{CHANGELOG,README,BUGS} )
+	fi
 }
-# END mercurial-only
 
 src_install() {
 	use vim-syntax && dodir /usr/share/vim/vimfiles
@@ -90,8 +89,6 @@ src_install() {
 		dosym ../../../asciidoc/images /usr/share/doc/${PF}/examples || die
 	fi
 
-	dosym ../../../asciidoc/images /usr/share/doc/${PF}/html || die
-	dosym ../../../asciidoc/stylesheets/docbook-xsl.css /usr/share/doc/${PF}/html || die
-
-	dodoc BUGS CHANGELOG README docbook-xsl/asciidoc-docbook-xsl.txt || die
+	dodoc BUGS CHANGELOG README docbook-xsl/asciidoc-docbook-xsl.txt \
+			dblatex/dblatex-readme.txt filters/code/code-filter-readme.txt || die
 }
