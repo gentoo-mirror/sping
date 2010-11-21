@@ -25,7 +25,8 @@ DEPEND=">=sys-apps/hal-0.5.8.1
 	>=xfce-base/exo-0.3.2
 	>=dev-libs/libcdio-0.76
 	cddb? ( >=media-libs/libcddb-1.2.1 )"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	sys-apps/hal"
 
 src_prepare() {
 	if has_version '>=xfce-base/exo-0.5' ; then
