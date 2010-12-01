@@ -15,13 +15,10 @@ DEBUG_DUMP_ACTIVE() {
 }
 
 eselect_python_update() {
-	local eselect_python_options
-	[[ "$(eselect python show)" == "python2."* ]] && eselect_python_options="--python2"
-
-	# Create python2 symlink.
-	eselect python update --python2 > /dev/null
-
-	eselect python update ${eselect_python_options}
+	# Exaggerated to worst case: update of all active python versions
+	eselect python update --python2
+	eselect python update --python3
+	eselect python update
 }
 
 pkg_postinst() {
