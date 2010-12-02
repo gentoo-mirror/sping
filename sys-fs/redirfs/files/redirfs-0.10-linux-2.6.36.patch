@@ -1,0 +1,17 @@
+--- rfs_inode.c	2010-12-02 14:18:15.397794885 +0100
++++ rfs_inode.c	2010-12-02 14:20:43.107874613 +0100
+@@ -745,7 +745,14 @@
+ 		return rfs_dq_transfer(inode, iattr) ? -EDQUOT : 0;
+ #endif
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,36)
+ 	return inode_setattr(inode, iattr);
++#else
++	/* TODO verify semantics */
++	setattr_copy(inode, iattr);
++	mark_inode_dirty(inode);
++	return 0;
++#endif
+ }
+ 
+ static int rfs_setattr(struct dentry *dentry, struct iattr *iattr)
