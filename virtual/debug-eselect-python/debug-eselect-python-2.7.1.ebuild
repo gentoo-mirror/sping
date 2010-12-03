@@ -31,10 +31,35 @@ pkg_preinst() {
 	DEBUG_DUMP_ACTIVE After ${FUNCNAME}
 }
 
-ensure_python_symlink() {
-	if [[ -z "$(eselect python show --python${PV%%.*})" ]]; then
-		eselect python update --python${PV%%.*}
-	fi
+repair_python_integration() {
+	case "$1" in
+	pkg_postinst)
+		# Ensure active python on our line (either 2.x or 3.x)
+		# If unset, use us
+		if [[ -z "$(eselect python show --python${PV%%.*})" ]]; then
+			eselect python set --python${PV%%.*} python${SLOT} || die
+		fi
+
+		# Ensure two symlinks are in place
+		for symlink in ${EROOT%/}/usr/bin/python{,${PV%%.*}}; do
+			[[ -f "${symlink}" ]] && continue
+			einfo "Creating symlink: ${symlink}"
+			ln -s python-wrapper "${symlink}" || die
+		done
+		;;
+
+	pkg_postrm)
+		# Ensure active python on our line (either 2.x or 3.x)
+		# If unset, use latest
+		if [[ -z "$(eselect python show --python${PV%%.*})" ]]; then
+			eselect python update --python${PV%%.*} --if-unset || die
+		fi
+		;;
+
+	*)
+		die 'unsupported usage of repair_python_integration()'
+		;;
+	esac
 }
 
 restore_active_python_version() {
@@ -60,7 +85,7 @@ pkg_postinst() {
 	DEBUG_DUMP_ACTIVE Before ${FUNCNAME}
 
 	restore_active_python_version
-	ensure_python_symlink
+	repair_python_integration ${FUNCNAME}
 
 	DEBUG_DUMP_ACTIVE After ${FUNCNAME}
 }
@@ -68,7 +93,7 @@ pkg_postinst() {
 pkg_postrm() {
 	DEBUG_DUMP_ACTIVE Before ${FUNCNAME}
 
-	ensure_python_symlink
+	repair_python_integration ${FUNCNAME}
 
 	DEBUG_DUMP_ACTIVE After ${FUNCNAME}
 }
