@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-python/fuse-python/fuse-python-0.2.ebuild,v 1.7 2008/08/30 20:26:27 jokey Exp $
 
-EAPI="2"
+EAPI="3"
 
 ECVS_SERVER="fuse.cvs.sourceforge.net:/cvsroot/fuse"
 ECVS_MODULE="python"
