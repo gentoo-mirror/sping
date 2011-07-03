@@ -2,7 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit linux-mod
+EAPI="3"
+
+inherit eutils linux-mod
 
 DESCRIPTION="Stackable passthru file system for Linux."
 HOMEPAGE="http://wrapfs.filesystems.org/"
@@ -21,6 +23,10 @@ pkg_setup() {
 	MODULE_NAMES="wrapfs(extra:)"
 	BUILD_TARGETS="wrapfs.ko"
 	BUILD_PARAMS="-C ${KERNEL_DIR} M=${S} modules"
+}
+
+src_prepare() {
+	epatch "${FILESDIR}"/${P}-2.6.39.patch
 }
 
 src_install() {
