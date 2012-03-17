@@ -35,6 +35,9 @@
 			replace text in the nginx response</flag>
 		<flag name='nginx_modules_http_upload'>Enable support for handling file
 			uploads using multipart/form-data encoding</flag>
+		<flag name='nginx_modules_http_fancyindex'>This module adds the ability
+			to generated file listings with more style than done by the
+			autoindex core module</flag>
 		<flag name='nginx_modules_http_slowfs_cache'>This module adds the
 			ability to cache static files</flag>
 		<flag name='nginx_modules_http_upload_progress'>This module adds the

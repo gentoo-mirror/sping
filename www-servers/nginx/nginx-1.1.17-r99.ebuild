@@ -45,6 +45,12 @@ HTTP_UPLOAD_MODULE_PV="2.2.0"
 HTTP_UPLOAD_MODULE_P="nginx_upload_module-${HTTP_UPLOAD_MODULE_PV}"
 HTTP_UPLOAD_MODULE_URI="http://www.grid.net.ru/nginx/download/${HTTP_UPLOAD_MODULE_P}.tar.gz"
 
+# http_fancyindex (https://gitorious.org/ngx-fancyindex/, BSD-2 license)
+HTTP_FANCYINDEX_MODULE_PV="0.3.1"
+HTTP_FANCYINDEX_MODULE_PN="ngx-fancyindex"
+HTTP_FANCYINDEX_MODULE_P="${HTTP_FANCYINDEX_MODULE_PN}-${HTTP_FANCYINDEX_MODULE_PV}"
+HTTP_FANCYINDEX_MODULE_URI="http://gitorious.org/${HTTP_FANCYINDEX_MODULE_PN}/${HTTP_FANCYINDEX_MODULE_PN}/archive-tarball/v${HTTP_FANCYINDEX_MODULE_PV}"
+
 # http_slowfs_cache (http://labs.frickle.com/nginx_ngx_slowfs_cache/, BSD-2 license)
 HTTP_SLOWFS_CACHE_MODULE_PV="1.6"
 HTTP_SLOWFS_CACHE_MODULE_P="ngx_slowfs_cache-${HTTP_SLOWFS_CACHE_MODULE_PV}"
@@ -60,6 +66,7 @@ SRC_URI="http://nginx.org/download/${P}.tar.gz
 	nginx_modules_http_push? ( ${HTTP_PUSH_MODULE_URI} )
 	nginx_modules_http_cache_purge? ( ${HTTP_CACHE_PURGE_MODULE_URI} )
 	nginx_modules_http_upload? ( ${HTTP_UPLOAD_MODULE_URI} )
+	nginx_modules_http_fancyindex? ( ${HTTP_FANCYINDEX_MODULE_URI} -> ${HTTP_FANCYINDEX_MODULE_P}.tar.gz )
 	nginx_modules_http_slowfs_cache? ( ${HTTP_SLOWFS_CACHE_MODULE_URI} )"
 
 LICENSE="as-is BSD BSD-2 GPL-2 MIT"
@@ -79,6 +86,7 @@ NGINX_MODULES_3RD="
 	http_push
 	http_cache_purge
 	http_upload
+	http_fancyindex
 	http_slowfs_cache"
 
 IUSE="aio debug +http +http-cache ipv6 libatomic +pcre pcre-jit ssl vim-syntax"
@@ -221,6 +229,11 @@ src_configure() {
 		myconf+=" --add-module=${WORKDIR}/${HTTP_UPLOAD_MODULE_P}"
 	fi
 
+	if use nginx_modules_http_fancyindex; then
+		http_enabled=1
+		myconf+=" --add-module=${WORKDIR}/${HTTP_FANCYINDEX_MODULE_PN}-${HTTP_FANCYINDEX_MODULE_PN}"
+	fi
+
 	if use nginx_modules_http_slowfs_cache; then
 		http_enabled=1
 		myconf+=" --add-module=${WORKDIR}/${HTTP_SLOWFS_CACHE_MODULE_P}"
@@ -325,6 +338,11 @@ src_install() {
 	if use nginx_modules_http_upload; then
 		docinto ${HTTP_UPLOAD_MODULE_P}
 		dodoc "${WORKDIR}"/${HTTP_UPLOAD_MODULE_P}/{Changelog,README}
+	fi
+
+	if use nginx_modules_http_fancyindex; then
+		docinto ${HTTP_FANCYINDEX_MODULE_P}
+		dodoc "${WORKDIR}"/${HTTP_FANCYINDEX_MODULE_PN}-${HTTP_FANCYINDEX_MODULE_PN}/{HACKING,README}.rst
 	fi
 
 	if use nginx_modules_http_slowfs_cache; then
