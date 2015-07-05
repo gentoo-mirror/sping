@@ -2,14 +2,15 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/gnome-extra/gnome-screensaver/Attic/gnome-screensaver-2.30.2-r1.ebuild,v 1.15 2014/11/13 11:53:57 pacho dead $
 
-EAPI="2"
+EAPI="5"
 
+GNOME_TARBALL_SUFFIX=bz2
 inherit eutils gnome2 multilib autotools
 
 DESCRIPTION="Replaces xscreensaver, integrating with the desktop"
 HOMEPAGE="http://live.gnome.org/GnomeScreensaver"
 SRC_URI="${SRC_URI}
-	branding? ( http://www.gentoo.org/images/gentoo-logo.svg )"
+	branding? ( https://wiki.gentoo.org/images/6/6b/Gentoo-logo.svg -> gentoo-logo.svg )"
 
 LICENSE="GPL-2+"
 SLOT="0"
