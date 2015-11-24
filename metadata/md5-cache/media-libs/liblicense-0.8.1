@@ -1,0 +1,14 @@
+DEFINED_PHASES=compile install unpack
+DEPEND=>=media-libs/raptor-1.0 xmp? ( >=media-libs/exempi-0.99.3 ) mp3? ( >=media-libs/id3lib-3.0 ) ruby? ( >=dev-lang/ruby-1.2 ) python? ( >=dev-lang/python-2.4 ) flac? ( >=media-libs/flac-1.0 ) vorbis? ( >=media-libs/libvorbis-1.0 ) xml? ( >=dev-libs/libxml2-2.4 ) ole? ( >=gnome-extra/libgsf-1.12 ) taglib? ( >=media-libs/taglib-1.4 ) gnome? ( >=gnome-extra/nautilus-python-0.4.3 ) sqlite3? ( =dev-db/sqlite-3* ) dev-util/pkgconfig !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4
+DESCRIPTION=A library for managing license metadata
+EAPI=0
+HOMEPAGE=http://wiki.creativecommons.org/Liblicense
+IUSE=xmp mp3 ruby python flac vorbis xml ole taglib gnome sqlite3
+KEYWORDS=~x86
+LICENSE=LGPL-2.1
+RDEPEND=>=media-libs/raptor-1.0 xmp? ( >=media-libs/exempi-0.99.3 ) mp3? ( >=media-libs/id3lib-3.0 ) ruby? ( >=dev-lang/ruby-1.2 ) python? ( >=dev-lang/python-2.4 ) flac? ( >=media-libs/flac-1.0 ) vorbis? ( >=media-libs/libvorbis-1.0 ) xml? ( >=dev-libs/libxml2-2.4 ) ole? ( >=gnome-extra/libgsf-1.12 ) taglib? ( >=media-libs/taglib-1.4 ) gnome? ( >=gnome-extra/nautilus-python-0.4.3 ) sqlite3? ( =dev-db/sqlite-3* )
+SLOT=0
+SRC_URI=http://mirrors.creativecommons.org/software/liblicense/liblicense-0.8.1.tar.gz mirror://sourceforge/cctools/liblicense-0.8.1.tar.gz
+_eclass_exported_funcs=src_unpack:- src_compile:- src_install:-
+_eclasses_=autotools	07e71b3b5690738ef7e8bc097077e00c	libtool	b75230758539a7da029e24afdb693960	multilib	3972ca401cf7dbb430df9995f5d8d580	toolchain-funcs	7a212e5e01adfa4805c9978366e6ee85
+_md5_=8dca065fd34c65a571927b5f85b7ee73
