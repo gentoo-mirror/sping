@@ -7,5 +7,5 @@ LICENSE=GPL-2
 RDEPEND=>=dev-lang/python-2.3 >=sys-fs/fuse-2.0 dev-lang/python
 SLOT=0
 _eclass_exported_funcs=pkg_postrm:- pkg_postinst:- src_unpack:cvs src_prepare:- src_compile:distutils src_install:distutils
-_eclasses_=cvs	e94c89c58918dff87fa3db1e817c25be	distutils	ad9e4720eb3e69090dd968b152fc611b	eutils	b83a2420b796f7c6eff682679d08fe25	multilib	d062ae4ba2fc40a19c11de2ad89b6616	python	efc1c55fc44c5b7272fc2ffba73c3e6f	toolchain-funcs	6198c04daba0e1307bd844df7d37f423
+_eclasses_=cvs	e94c89c58918dff87fa3db1e817c25be	distutils	ad9e4720eb3e69090dd968b152fc611b	eutils	b83a2420b796f7c6eff682679d08fe25	multilib	165fc17c38d1b11dac2008280dab6e80	python	efc1c55fc44c5b7272fc2ffba73c3e6f	toolchain-funcs	6198c04daba0e1307bd844df7d37f423
 _md5_=f6d97052e0003744c8e4635bcddfaafe
