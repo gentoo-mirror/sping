@@ -1,4 +1,3 @@
-app-portage/g-pypi 9999: Tool for creating Gentoo ebuilds for Python packages by querying PyPI (The Cheese Shop)
 dev-python/4suite 1.0.2-r1: Python tools for XML processing and object-databases.
 dev-python/fuse-python 9999: Python FUSE bindings
 dev-python/myghty 9999: Template and view-controller framework derived from HTML::Mason.
