@@ -1,11 +1,3 @@
-dev-python/4suite 1.0.2-r1: Python tools for XML processing and object-databases.
-dev-python/fuse-python 9999: Python FUSE bindings
-dev-python/myghty 9999: Template and view-controller framework derived from HTML::Mason.
-dev-python/pyntch 0_p20091028 9999: Static code analyzer for Python
-dev-python/turboflot 0.1.2: A TurboGears widget for Flot, a jQuery plotting library
 gnome-extra/gnome-screensaver 2.30.2-r1: Replaces xscreensaver, integrating with the desktop
-gnome-extra/liblicense-gnome 0.4: Gnome Nautilus license integration through liblicense.
-media-libs/liblicense 0.4 0.8.1: A library for managing license metadata
 media-plugins/audacious-bs2b 0.9.2: Audacious plugin applying the bs2b headphone effect
-media-sound/boombox 0.3.1: Collection-oriented music player using Qt3 and xinelib.
 sys-devel/make 3.82-r3: Standard tool to compile source trees
