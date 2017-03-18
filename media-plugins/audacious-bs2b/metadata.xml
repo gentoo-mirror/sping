@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>sping@gentoo.org</email>
+	</maintainer>
+		<use>
+			<flag name="BS2B_HIGH_CLEVEL">Use BS2B_HIGH_CLEVEL algorithm parameter</flag>
+			<flag name="BS2B_MIDDLE_CLEVEL">Use BS2B_MIDDLE_CLEVEL algorithm parameter</flag>
+			<flag name="BS2B_LOW_CLEVEL">Use BS2B_LOW_CLEVEL algorithm parameter</flag>
+			<flag name="BS2B_HIGH_ECLEVEL">Use BS2B_HIGH_ECLEVEL algorithm parameter</flag>
+			<flag name="BS2B_MIDDLE_ECLEVEL">Use BS2B_MIDDLE_ECLEVEL algorithm parameter</flag>
+			<flag name="BS2B_LOW_ECLEVEL">Use BS2B_LOW_ECLEVEL algorithm parameter</flag>
+			<flag name="BS2B_CMOY_CLEVEL">Use BS2B_CMOY_CLEVEL algorithm parameter</flag>
+			<flag name="BS2B_JMEIER_CLEVEL">Use BS2B_JMEIER_CLEVEL algorithm parameter</flag>
+			<flag name="v2-default-level">Use default algorithm parameter of libbs2b 2.x,
+					i.e. BS2B_HIGH_ECLEVEL</flag>
+		</use>
+</pkgmetadata>
