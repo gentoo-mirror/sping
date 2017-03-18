@@ -20,9 +20,7 @@ IUSE="branding debug doc libnotify opengl pam $KERNEL_IUSE"
 RDEPEND=">=gnome-base/gconf-2.6.1:2
 	>=x11-libs/gtk+-2.14.0:2
 	>=gnome-base/gnome-desktop-2.29.0:2
-	>=gnome-base/gnome-menus-2.12:0
 	>=dev-libs/glib-2.15:2
-	>=gnome-base/libgnomekbd-0.1
 	>=dev-libs/dbus-glib-0.71
 	libnotify? ( x11-libs/libnotify )
 	opengl? ( virtual/opengl )
