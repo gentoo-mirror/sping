@@ -1,6 +1,5 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-python/4suite/4suite-1.0.2-r1.ebuild,v 1.10 2010/07/21 21:46:04 arfrever Exp $
 
 EAPI="3"
 PYTHON_DEPEND="2"
