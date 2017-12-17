@@ -2,12 +2,3 @@
 # Please add your descriptions to your package's metadata.xml ONLY.
 # * generated automatically using pmaint *
 
-media-plugins/audacious-bs2b:BS2B_CMOY_CLEVEL - Use BS2B_CMOY_CLEVEL algorithm parameter
-media-plugins/audacious-bs2b:BS2B_HIGH_CLEVEL - Use BS2B_HIGH_CLEVEL algorithm parameter
-media-plugins/audacious-bs2b:BS2B_HIGH_ECLEVEL - Use BS2B_HIGH_ECLEVEL algorithm parameter
-media-plugins/audacious-bs2b:BS2B_JMEIER_CLEVEL - Use BS2B_JMEIER_CLEVEL algorithm parameter
-media-plugins/audacious-bs2b:BS2B_LOW_CLEVEL - Use BS2B_LOW_CLEVEL algorithm parameter
-media-plugins/audacious-bs2b:BS2B_LOW_ECLEVEL - Use BS2B_LOW_ECLEVEL algorithm parameter
-media-plugins/audacious-bs2b:BS2B_MIDDLE_CLEVEL - Use BS2B_MIDDLE_CLEVEL algorithm parameter
-media-plugins/audacious-bs2b:BS2B_MIDDLE_ECLEVEL - Use BS2B_MIDDLE_ECLEVEL algorithm parameter
-media-plugins/audacious-bs2b:v2-default-level - Use default algorithm parameter of libbs2b 2.x, i.e. BS2B_HIGH_ECLEVEL
